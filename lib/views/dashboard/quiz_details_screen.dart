@@ -22,6 +22,7 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             Container(
