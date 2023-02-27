@@ -145,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(12),
                                 image: DecorationImage(
                                     image: NetworkImage(
-                                      'https://www.actechindia.org/uploads/${sliderImageList[itemIndex].bannerImage}',
+                                      'https://vedioclasses.provisioningtech.com/uploads/${sliderImageList[itemIndex].bannerImage}',
                                     ),
                                     fit: BoxFit.cover)),
                           )),
@@ -266,7 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(15),
                               shape: BoxShape.rectangle,
                               image: DecorationImage(
-                                image:  NetworkImage("https://www.actechindia.org/uploads/${image}"),
+                                image:  NetworkImage("https://vedioclasses.provisioningtech.com/uploads/${image}"),
                                 fit: BoxFit.fitHeight,
                               ),
                             ),
