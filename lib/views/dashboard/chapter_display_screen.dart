@@ -107,7 +107,7 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
-            image:  NetworkImage("https://www.actechindia.org/uploads/${widget.arguments?.ccImg}"),
+            image:  NetworkImage("https://vedioclasses.provisioningtech.com/uploads/${widget.arguments?.ccImg}"),
             fit: BoxFit.cover,
           ),
         ),

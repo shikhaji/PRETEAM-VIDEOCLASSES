@@ -21,177 +21,178 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            height: Sizes.s200,
-            color: AppColor.lightYellow,
-            child: Container(
-              child: Column(
-               children: [
-                 SizedBoxH10(),
-                 Container(
-                   alignment: Alignment.center,
-                   color: AppColor.darkBlue,
-                   height: Sizes.s30,
-                   child: Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                     children: [
-                       appText("Contest ID GM001",style: AppTextStyle.buttonTextStyle1,),
-                       appText("Start On",style: AppTextStyle.buttonTextStyle1,),
-                       appText("Contest ID GM001",style: AppTextStyle.buttonTextStyle1,),
-                     ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: Sizes.s200,
+              color: AppColor.lightYellow,
+              child: Container(
+                child: Column(
+                 children: [
+                   SizedBoxH10(),
+                   Container(
+                     alignment: Alignment.center,
+                     color: AppColor.darkBlue,
+                     height: Sizes.s30,
+                     child: Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                       children: [
+                         appText("Contest ID GM001",style: AppTextStyle.buttonTextStyle1,),
+                         appText("Start On",style: AppTextStyle.buttonTextStyle1,),
+                         appText("Contest ID GM001",style: AppTextStyle.buttonTextStyle1,),
+                       ],
+                     ),
                    ),
-                 ),
-                 Container(
-                   color: AppColor.sand,
-                   height: Sizes.s90,
-                   alignment: Alignment.center,
-                   child: Row(
-                     mainAxisAlignment: MainAxisAlignment.start,
-                     children: [
-                       appText("Total Participants = 1000",style: AppTextStyle.titleRed,),
-                      ],
+                   Container(
+                     color: AppColor.sand,
+                     height: Sizes.s90,
+                     alignment: Alignment.center,
+                     child: Row(
+                       mainAxisAlignment: MainAxisAlignment.start,
+                       children: [
+                         appText("Total Participants = 1000",style: AppTextStyle.titleRed,),
+                        ],
+                     ),
                    ),
-                 ),
-                 Container(
-                   alignment: Alignment.center,
-                   color: AppColor.darkBlue,
-                   height: Sizes.s30,
-                   child: Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                     children: [
-                       Row(
-                         children: [
-                           Image.asset(AppAsset.winner,scale:25),
-                           SizedBoxW6(),
-                           Icon(Icons.currency_rupee,size: 12,color: Colors.white,),
-                           appText("15000",style: AppTextStyle.buttonTextStyle1,),
-                         ],
-                       ),
-                       SizedBoxW10(),
-                       appText("Start On",style: AppTextStyle.buttonTextStyle1,),
-                       appText("Contest ID GM001",style: AppTextStyle.buttonTextStyle1,),
-                     ],
+                   Container(
+                     alignment: Alignment.center,
+                     color: AppColor.darkBlue,
+                     height: Sizes.s30,
+                     child: Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                       children: [
+                         Row(
+                           children: [
+                             Image.asset(AppAsset.winner,scale:25),
+                             SizedBoxW6(),
+                             Icon(Icons.currency_rupee,size: 12,color: Colors.white,),
+                             appText("15000",style: AppTextStyle.buttonTextStyle1,),
+                           ],
+                         ),
+                         SizedBoxW10(),
+                         appText("Start On",style: AppTextStyle.buttonTextStyle1,),
+                         appText("Contest ID GM001",style: AppTextStyle.buttonTextStyle1,),
+                       ],
+                     ),
                    ),
-                 ),
-                 SizedBoxH10(),
-                 Container(
-                   child: Row(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: [
-                       appText("CONTEST RULES",style: AppTextStyle.titleRed),
-                     ],
+                   SizedBoxH10(),
+                   Container(
+                     child: Row(
+                       mainAxisAlignment: MainAxisAlignment.center,
+                       children: [
+                         appText("CONTEST RULES",style: AppTextStyle.titleRed),
+                       ],
+                     ),
                    ),
-                 ),
-               ],
+                 ],
+                ),
               ),
             ),
-          ),
-          Container(
-            height: 453,
-            width: double.infinity,
-            color: Colors.blue,
-            child: Column(
-              children: [
-                SizedBoxH10(),
-                Container(
-                  width: Sizes.s350,
-                  height: Sizes.s100,
-                  color: AppColor.sand,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              color: AppColor.sand,
-                              child: Row(
-                                children: [
-                                  SizedBoxW8(),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      appText("Rule:0",
-                                          style: AppTextStyle.alertSubtitleRed
-                                              .copyWith(fontSize: Sizes.s16.h)),
-                                      SizedBoxH6(),
-                                      appText("ENGLISH TEXT",
-                                          style: AppTextStyle.body1
-                                              .copyWith(fontSize: Sizes.s16.h)),
-                                      appText("HINDI TEXT",
-                                          style: AppTextStyle.alertSubtitle
-                                              .copyWith(fontSize: Sizes.s16.h)),
+            SizedBox(
+              height: double.maxFinite,
+              width: double.infinity,
+              child: Column(
+                children: [
+                  SizedBoxH34(),
+                  Container(
+                    width: Sizes.s350,
+                    height: Sizes.s100,
+                    color: AppColor.sand,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                color: AppColor.sand,
+                                child: Row(
+                                  children: [
+                                    SizedBoxW8(),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        appText("Rule:0",
+                                            style: AppTextStyle.alertSubtitleRed
+                                                .copyWith(fontSize: Sizes.s16.h)),
+                                        SizedBoxH6(),
+                                        appText("ENGLISH TEXT",
+                                            style: AppTextStyle.body1
+                                                .copyWith(fontSize: Sizes.s16.h)),
+                                        appText("HINDI TEXT",
+                                            style: AppTextStyle.alertSubtitle
+                                                .copyWith(fontSize: Sizes.s16.h)),
 
-                                    ],
-                                  ),
+                                      ],
+                                    ),
 
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  height: Sizes.s2,
-                  width: Sizes.s350,
-                  color: AppColor.red,
-                ),
-                Container(
-                  height: Sizes.s100,
-                  width: Sizes.s350,
-                  color: AppColor.sand,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: Row(
-                                children: [
-                                  SizedBoxW8(),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      appText("Rule:1",
-                                          style: AppTextStyle.alertSubtitleRed
-                                              .copyWith(fontSize: Sizes.s16.h)),
-                                      SizedBoxH6(),
-                                      appText("HINDI TEXT RULE 3",
-                                          style: AppTextStyle.body1
-                                              .copyWith(fontSize: Sizes.s16.h)),
-                                      appText("ENGLISH TEXT RULE 3",
-                                          style: AppTextStyle.alertSubtitle
-                                              .copyWith(fontSize: Sizes.s16.h)),
+                  Container(
+                    height: Sizes.s2,
+                    width: Sizes.s350,
+                    color: AppColor.red,
+                  ),
+                  Container(
+                    height: Sizes.s100,
+                    width: Sizes.s350,
+                    color: AppColor.sand,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Row(
+                                  children: [
+                                    SizedBoxW8(),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        appText("Rule:1",
+                                            style: AppTextStyle.alertSubtitleRed
+                                                .copyWith(fontSize: Sizes.s16.h)),
+                                        SizedBoxH6(),
+                                        appText("HINDI TEXT RULE 3",
+                                            style: AppTextStyle.body1
+                                                .copyWith(fontSize: Sizes.s16.h)),
+                                        appText("ENGLISH TEXT RULE 3",
+                                            style: AppTextStyle.alertSubtitle
+                                                .copyWith(fontSize: Sizes.s16.h)),
 
-                                    ],
-                                  ),
+                                      ],
+                                    ),
 
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
 
+        ),
       ),
 
       appBar: SecondaryAppBar(
