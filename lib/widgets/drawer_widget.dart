@@ -66,7 +66,7 @@ class _DrawerState extends State<DrawerWidget> {
                       title: 'Terms & Conditions',
                       onTap: () async {
                         var url = Uri.parse(
-                            "https://actechindia.org/terms-conditions.html");
+                            "https://vedioclasses.provisioningtech.com/terms-conditions.html");
                         if (await canLaunchUrl(url)) {
                           await launchUrl(url);
                         } else {
@@ -79,7 +79,7 @@ class _DrawerState extends State<DrawerWidget> {
                       title: 'Privacy Policy',
                       onTap: () async {
                         var url = Uri.parse(
-                            "https://actechindia.org/privacy-policy.html");
+                            "https://vedioclasses.provisioningtech.com/privacy-policy.html");
                         if (await canLaunchUrl(url)) {
                           await launchUrl(url);
                         } else {
@@ -92,7 +92,7 @@ class _DrawerState extends State<DrawerWidget> {
                       title: 'About Us',
                       onTap: () async {
                         var url = Uri.parse(
-                            "https://actechindia.org/about-us.html");
+                            "https://vedioclasses.provisioningtech.com/about-us.html");
                         if (await canLaunchUrl(url)) {
                           await launchUrl(url);
                         } else {
@@ -105,7 +105,7 @@ class _DrawerState extends State<DrawerWidget> {
                       title: 'Payment Refund',
                       onTap: () async {
                         var url = Uri.parse(
-                            "https://actechindia.org/payment-refund.html");
+                            "https://vedioclasses.provisioningtech.com/payment-refund.html");
                         if (await canLaunchUrl(url)) {
                           await launchUrl(url);
                         } else {

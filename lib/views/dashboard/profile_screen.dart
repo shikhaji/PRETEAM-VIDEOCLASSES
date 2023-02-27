@@ -143,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             title: 'Terms & Conditions',
             onTap: () async {
               var url = Uri.parse(
-                  "https://actechindia.org/terms-conditions.html");
+                  "https://vedioclasses.provisioningtech.com/terms-conditions.html");
               if (await canLaunchUrl(url)) {
                 await launchUrl(url);
               } else {
@@ -165,7 +165,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: 'Privacy Policy',
                 onTap: () async {
                   var url = Uri.parse(
-                      "https://actechindia.org/privacy-policy.html");
+                      "https://vedioclasses.provisioningtech.com/privacy-policy.html");
                   if (await canLaunchUrl(url)) {
                     await launchUrl(url);
                   } else {
@@ -186,7 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: 'About Us',
                 onTap: () async {
                   var url = Uri.parse(
-                      "https://actechindia.org/about-us.html");
+                      "https://vedioclasses.provisioningtech.com/about-us.html");
                   if (await canLaunchUrl(url)) {
                     await launchUrl(url);
                   } else {
