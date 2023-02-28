@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pr_team/utils/app_text_style.dart';
 import 'package:pr_team/views/splash/welcome_screen.dart';
+import 'package:pr_team/widgets/app_text.dart';
 import 'package:sizer/sizer.dart';
 import '../../routes/arguments.dart';
 import '../../services/shared_preferences.dart';
@@ -55,6 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
               AppAsset.mainLogoImage,
               height: 25.h,
             ),
+            appText("PR TEAM",style: AppTextStyle.title),
           ],
         ),
       )
