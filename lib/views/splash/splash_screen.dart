@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pr_team/views/splash/welcome_screen.dart';
 import 'package:sizer/sizer.dart';
+import '../../routes/arguments.dart';
 import '../../services/shared_preferences.dart';
 import '../../utils/app_assets.dart';
 import '../../widgets/custom_size_box.dart';
@@ -31,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (id != null ) {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
-                builder: (context) => const MainHomeScreen()),
+                builder: (context) =>  MainHomeScreen(arguments: OtpArguments(bottomIndex: 0),)),
             (Route<dynamic> route) => false);
       } else {
         Navigator.of(context).pushAndRemoveUntil(

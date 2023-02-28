@@ -16,6 +16,7 @@ import '../model/my_profile_model.dart';
 import '../model/slider_model.dart';
 import '../model/verify_center_code_model.dart';
 import '../routes/app_routes.dart';
+import '../routes/arguments.dart';
 import '../utils/function.dart';
 import '../utils/loader.dart';
 import '../views/auth/login_screen.dart';
@@ -117,7 +118,7 @@ class ApiService {
         CommonFunctions.toast("Login Success");
 
         Navigator.pushNamedAndRemoveUntil(
-            context, Routs.mainHome, (route) => false);
+            context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 0), (route) => false);
 
         return responseData;
       } else {

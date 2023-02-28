@@ -67,7 +67,8 @@ class RoutGenerator {
 
       case Routs.mainHome:
         return MaterialPageRoute(
-            builder: (_) => const MainHomeScreen());
+            builder: (_) =>  MainHomeScreen(arguments: arguments as OtpArguments?,));
+
 
       case Routs.resetPassword:
         return MaterialPageRoute(

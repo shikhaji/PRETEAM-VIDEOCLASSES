@@ -1,8 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:pr_team/views/dashboard/profile_screen.dart';
+import '../../routes/arguments.dart';
 import '../../utils/app_sizes.dart';
 import '../../utils/screen_utils.dart';
-
 import '../../widgets/custom_bottom_navigation_bar.dart';
 import '../../widgets/drawer_widget.dart';
 import 'categories_screen.dart';
@@ -10,17 +11,28 @@ import 'home_screen.dart';
 import 'my_order_screen.dart';
 
 class MainHomeScreen extends StatefulWidget {
-  const MainHomeScreen({Key? key}) : super(key: key);
+  final OtpArguments? arguments;
+  MainHomeScreen({Key? key, this.arguments}) : super(key: key);
 
   @override
   State<MainHomeScreen> createState() => _MainHomeScreenState();
 }
 
 class _MainHomeScreenState extends State<MainHomeScreen> {
+  int _selectedIndex = 0;
+  bool isMenuOpen = false;
   final ValueNotifier<int> _currentIndexNotifier = ValueNotifier(0);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.arguments!.bottomIndex != 0) {
+      _currentIndexNotifier.value = widget.arguments!.bottomIndex!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +65,8 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
     );
   }
 
-  Widget _buildBody(int index) {
-    switch (index) {
+  Widget _buildBody(int _selectedIndex) {
+    switch (_selectedIndex) {
       case 0:
         return const HomeScreen();
       case 1:
@@ -68,3 +80,4 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
     return Container();
   }
 }
+

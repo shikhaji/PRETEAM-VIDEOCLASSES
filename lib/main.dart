@@ -29,7 +29,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
-  // disableCapture();
+  disableCapture();
 }
 
 class MyApp extends StatelessWidget {
