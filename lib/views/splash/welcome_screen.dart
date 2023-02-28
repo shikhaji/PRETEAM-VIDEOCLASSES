@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pr_team/views/auth/mobile_verification_screen.dart';
 import 'package:sizer/sizer.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_text_style.dart';
@@ -59,7 +60,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>SignUpScreen()));
+                                builder: (context) =>MobileVerificationScreen()));
                         //  clearField();
                       }),
                 ),
