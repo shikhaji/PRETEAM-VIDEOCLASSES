@@ -47,10 +47,20 @@ List<Question> getQuestions() {
   ));
 
   list.add(Question(
-    "Flutter user dart as a language?",
+    "Flutter uses dart as a language?",
     [
       Answer("True", true),
       Answer("False", false),
+    ],
+  ));
+
+  list.add(Question(
+    "What sports car company manufactures the 911? ",
+    [
+      Answer("Toyota", false),
+      Answer("Porsche", true),
+      Answer("Pagani", false),
+      Answer("Ferrari", false),
     ],
   ));
 
