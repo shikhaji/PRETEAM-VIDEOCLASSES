@@ -35,7 +35,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
                 SizedBoxH30(),
                 appText("Welcome to ",style:AppTextStyle.title ),
-                appText("PR Team",style:AppTextStyle.title ),
+                appText("Online Class",style:AppTextStyle.title ),
                 SizedBoxH34(),
                 appText("Already have an account ?",style:AppTextStyle.lable ),
                 SizedBoxH14(),
