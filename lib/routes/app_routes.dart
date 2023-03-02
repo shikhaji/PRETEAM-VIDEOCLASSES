@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:pr_team/views/dashboard/demo.dart';
 import 'package:pr_team/views/dashboard/quiz_details_screen.dart';
 import 'package:pr_team/views/dashboard/quiz_screen.dart';
 import '../views/auth/edit_profile.dart';
@@ -38,6 +39,7 @@ class Routs {
   static const String introductionVideo = "/introduction_video_screen";
   static const String quizDetails = "/quiz_details_screen";
   static const String questionScreen = "/quiz_screen";
+  static const String demoScreen = "/demo";
 }
 
 class RoutGenerator {
@@ -115,6 +117,10 @@ class RoutGenerator {
       case Routs.questionScreen:
         return MaterialPageRoute(
             builder: (_) => QuizScreen());
+
+      case Routs.demoScreen:
+        return MaterialPageRoute(
+            builder: (_) => DemoScreen());
 
       default:
         return null;

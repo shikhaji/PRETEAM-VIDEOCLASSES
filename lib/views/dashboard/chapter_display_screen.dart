@@ -53,6 +53,7 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
       flags: YoutubePlayerFlags(
         autoPlay: false,
 
+
       ),
     );
     super.initState();
@@ -135,6 +136,13 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
         ),
       ),
           SizedBoxH10(),
+          SizedBoxH34(),
+          PrimaryButton(
+              lable: "DemoPage",
+              onPressed: (){
+                Navigator.pushNamed(context, Routs.demoScreen);
+              }
+          ),
           SizedBoxH34(),
           SizedBoxH34(),
           Align(
