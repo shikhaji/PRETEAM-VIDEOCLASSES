@@ -26,5 +26,6 @@
     static const Color green = Color(0xff00A355);
     static const Color textFieldColor = Color(0xffEEF2F6);
     static const Color sand = Color(0xfff6d7b0);
+    static const Color darkBlue1 = Color(0xff082238);
   }
 

@@ -24,7 +24,7 @@ class CourseDetailsScreen extends StatefulWidget {
 }
 
 class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
-  List<Course> getAllCourseDetails=[];
+  List<Course> getAllCourseDetails = [];
 
   @override
   void initState() {
@@ -34,84 +34,102 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     callApi();
   }
 
-
   Future<void> callApi() async {
-
     FormData data() {
       return FormData.fromMap({
         "cc_id": widget.arguments?.ccId,
       });
     }
-    ApiService().categoryById(context,data: data()).then((value){
 
+    ApiService().categoryById(context, data: data()).then((value) {
       setState(() {
-        getAllCourseDetails=value.course!;
+        getAllCourseDetails = value.course!;
       });
     });
-
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: CustomScroll(
-          children: [
-            SizedBoxH10(),
-            Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    image: DecorationImage(
-                      image:  NetworkImage("https://vedioclasses.provisioningtech.com/uploads/${widget.arguments?.ccImg}"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-              height: Sizes.s200.h,
-
-              ),
-            SizedBoxH34(),
-            Align(
-                alignment: Alignment.topLeft,
-                child: appText("${widget.arguments?.ccCourseName}",style: AppTextStyle.title,)
-            ),
-            SizedBoxH10(),
-            SizedBoxH30(),
-            Row(
-              children:[Text("${getAllCourseDetails.length.toString()} Lessons",style: AppTextStyle.alertSubtitle)],
-            ),
-            SizedBoxH10(),
-            Container(
-              height: Sizes.s320,
-              child: SingleChildScrollView(
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: getAllCourseDetails.length,
-                  itemBuilder: (context, inx) {
-                    return CoursesListContainer(
-                       name: getAllCourseDetails[inx].cCFVNAME ?? "",
-                       minutes: "20 Minutes",
-                      url: getAllCourseDetails[inx].cCFVURL ?? "",
-                      chapterName: getAllCourseDetails[inx].cVLNAME ?? "",
-                      chapterPdf: getAllCourseDetails[inx].cVLCOURSEPDF  ?? "",
-                      desc: getAllCourseDetails[inx].cVLDESC  ?? "",
-                      img: getAllCourseDetails[inx].cCFVCOURSEIMAGE ?? "",
-
-                    );
-                  },
-                ),
+      body: CustomScroll(
+        children: [
+          SizedBoxH10(),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              image: DecorationImage(
+                image: NetworkImage(
+                    "https://vedioclasses.provisioningtech.com/uploads/${widget.arguments?.ccImg}"),
+                fit: BoxFit.cover,
               ),
             ),
-            //Container
-
-          ],
+            height: Sizes.s200.h,
+          ),
+          SizedBoxH34(),
+          Align(
+              alignment: Alignment.topLeft,
+              child: appText(
+                "${widget.arguments?.ccCourseName}",
+                style: AppTextStyle.title,
+              )),
+          SizedBoxH10(),
+          SizedBoxH30(),
+          Row(
+            children: [
+              Text("${getAllCourseDetails.length.toString()} Lessons",
+                  style: AppTextStyle.alertSubtitle)
+            ],
+          ),
+          SizedBoxH10(),
+          Container(
+            height: Sizes.s320,
+            child: SingleChildScrollView(
+              child: ListView.builder(
+                padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: getAllCourseDetails.length,
+                itemBuilder: (context, inx) {
+                  return CoursesListContainer(
+                    name: getAllCourseDetails[inx].cCFVNAME ?? "",
+                    minutes: "20 Minutes",
+                    url: getAllCourseDetails[inx].cCFVURL ?? "",
+                    chapterName: getAllCourseDetails[inx].cVLNAME ?? "",
+                    chapterPdf: getAllCourseDetails[inx].cVLCOURSEPDF ?? "",
+                    desc: getAllCourseDetails[inx].cVLDESC ?? "",
+                    img: getAllCourseDetails[inx].cCFVCOURSEIMAGE ?? "",
+                  );
+                },
+              ),
+            ),
+          ),
+          //Container
+        ],
+      ),
+      appBar: SecondaryAppBar(
+        title: "${widget.arguments?.ccCourseName}",
+        isLeading: true,
+        leadingIcon: Icons.arrow_back,
+      ),
+      bottomNavigationBar: Material(
+        color: AppColor.primaryColor,
+        child: InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, Routs.quizDetails);
+          },
+          child: const SizedBox(
+            height: Sizes.s50,
+            width: double.infinity,
+            child: Center(
+              child: Text(
+                'Take Quiz',
+                style: AppTextStyle.lable,
+              ),
+            ),
+          ),
         ),
-        appBar: SecondaryAppBar(
-          title: "${widget.arguments?.ccCourseName}",
-          isLeading: true,
-          leadingIcon: Icons.arrow_back,
-        )
+      ),
     );
-
   }
 
   Widget CoursesListContainer({
@@ -122,7 +140,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     required String chapterPdf,
     required String desc,
     required String img,
-  }){
+  }) {
     return Column(
       children: [
         Container(
@@ -138,7 +156,6 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
                     Container(
                       child: Row(
                         children: [
@@ -148,47 +165,45 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               image: DecorationImage(
-                                image:  NetworkImage("https://vedioclasses.provisioningtech.com/uploads/${widget.arguments?.ccImg}"),
+                                image: NetworkImage(
+                                    "https://vedioclasses.provisioningtech.com/uploads/${widget.arguments?.ccImg}"),
                                 fit: BoxFit.cover,
                               ),
                             ),
                           ),
-
                           SizedBoxW8(),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              appText(name,
+                              appText(chapterName,
                                   style: AppTextStyle.alertSubtitle
                                       .copyWith(fontSize: Sizes.s16.h)),
                               SizedBoxH6(),
                               appText(minutes,
                                   style: AppTextStyle.alertSubtitle
                                       .copyWith(fontSize: Sizes.s16.h)),
-
                             ],
                           ),
-
                         ],
                       ),
                     ),
-                     Column(
+                    Column(
                       children: [
                         SizedBox(
                           height: 90,
                           width: 35,
                           child: GestureDetector(
-                              onTap:(){
-                                Navigator.pushNamed(context, Routs.chapterDisplay,
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, Routs.chapterDisplay,
                                     arguments: OtpArguments(
-                                      ccUrl: url,
-                                      ccChapterName: name,
-                                      ccCourseName: chapterName,
-                                      ccChapterPdf: chapterPdf,
-                                      ccDesc: desc,
-                                      ccImg: img
-                                    ));
+                                        ccUrl: url,
+                                        ccChapterName: name,
+                                        ccCourseName: chapterName,
+                                        ccChapterPdf: chapterPdf,
+                                        ccDesc: desc,
+                                        ccImg: img));
                                 //  clearField();
                               },
                               child: Image.asset(AppAsset.playButton)),
@@ -204,8 +219,5 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
         SizedBoxH10(),
       ],
     );
-
-
   }
 }
-

@@ -137,10 +137,6 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
           SizedBoxH10(),
           SizedBoxH34(),
           SizedBoxH34(),
-          PrimaryButton(lable: "Take Quiz", onPressed: (){
-            Navigator.pushNamed(context, Routs.quizDetails);
-          }),
-          SizedBoxH34(),
           Align(
               alignment: Alignment.topLeft,
               child: appText("${widget.arguments?.ccChapterName}",

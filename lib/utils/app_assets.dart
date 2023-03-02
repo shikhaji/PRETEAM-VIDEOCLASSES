@@ -48,4 +48,5 @@ class AppAsset {
 
   //QUIZ Page
   static const String winner = "${iconPath}winner.png";
+  static const String quizImage = "${imagePath}quizTime.png";
 }
