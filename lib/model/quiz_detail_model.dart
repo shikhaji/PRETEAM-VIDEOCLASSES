@@ -26,12 +26,22 @@ class QuizDetails {
   String? lOGINID;
   String? cONTESTTOTALTIME;
   String? cONTESTPASSINGMARKS;
-  String? id;
-  String? vendorId;
-  String? brandName;
-  String? status;
-  String? date;
-  String? brandImage;
+  String? cVLTT;
+  String? cVLCCFVID;
+  String? cVLNAME;
+  String? cVLSTATUS;
+  String? cVLID;
+  String? cVLCOURSEPDF;
+  String? cVLVIDEOURL;
+  String? cVLDESC;
+  String? cCFVID;
+  String? cCFVTT;
+  String? cCFVNAME;
+  String? cCFVSTATUS;
+  String? cCFVCOMMISION;
+  String? cCFVCOURSEIMAGE;
+  String? cCFVTOTALLESSONS;
+  String? cCFVURL;
 
   QuizDetails(
       {this.cONTESTID,
@@ -61,12 +71,22 @@ class QuizDetails {
         this.lOGINID,
         this.cONTESTTOTALTIME,
         this.cONTESTPASSINGMARKS,
-        this.id,
-        this.vendorId,
-        this.brandName,
-        this.status,
-        this.date,
-        this.brandImage});
+        this.cVLTT,
+        this.cVLCCFVID,
+        this.cVLNAME,
+        this.cVLSTATUS,
+        this.cVLID,
+        this.cVLCOURSEPDF,
+        this.cVLVIDEOURL,
+        this.cVLDESC,
+        this.cCFVID,
+        this.cCFVTT,
+        this.cCFVNAME,
+        this.cCFVSTATUS,
+        this.cCFVCOMMISION,
+        this.cCFVCOURSEIMAGE,
+        this.cCFVTOTALLESSONS,
+        this.cCFVURL});
 
   QuizDetails.fromJson(Map<String, dynamic> json) {
     cONTESTID = json['CONTEST_ID'];
@@ -96,12 +116,22 @@ class QuizDetails {
     lOGINID = json['LOGIN_ID'];
     cONTESTTOTALTIME = json['CONTEST_TOTAL_TIME'];
     cONTESTPASSINGMARKS = json['CONTEST_PASSING_MARKS'];
-    id = json['id'];
-    vendorId = json['vendor_id'];
-    brandName = json['brand_name'];
-    status = json['status'];
-    date = json['date'];
-    brandImage = json['brand_image'];
+    cVLTT = json['CVL_TT'];
+    cVLCCFVID = json['CVL_CCFV_ID'];
+    cVLNAME = json['CVL_NAME'];
+    cVLSTATUS = json['CVL_STATUS'];
+    cVLID = json['CVL_ID'];
+    cVLCOURSEPDF = json['CVL_COURSE_PDF'];
+    cVLVIDEOURL = json['CVL_VIDEO_URL'];
+    cVLDESC = json['CVL_DESC'];
+    cCFVID = json['CCFV_ID'];
+    cCFVTT = json['CCFV_TT'];
+    cCFVNAME = json['CCFV_NAME'];
+    cCFVSTATUS = json['CCFV_STATUS'];
+    cCFVCOMMISION = json['CCFV_COMMISION'];
+    cCFVCOURSEIMAGE = json['CCFV_COURSE_IMAGE'];
+    cCFVTOTALLESSONS = json['CCFV_TOTAL_LESSONS'];
+    cCFVURL = json['CCFV_URL'];
   }
 
   Map<String, dynamic> toJson() {
@@ -133,12 +163,22 @@ class QuizDetails {
     data['LOGIN_ID'] = this.lOGINID;
     data['CONTEST_TOTAL_TIME'] = this.cONTESTTOTALTIME;
     data['CONTEST_PASSING_MARKS'] = this.cONTESTPASSINGMARKS;
-    data['id'] = this.id;
-    data['vendor_id'] = this.vendorId;
-    data['brand_name'] = this.brandName;
-    data['status'] = this.status;
-    data['date'] = this.date;
-    data['brand_image'] = this.brandImage;
+    data['CVL_TT'] = this.cVLTT;
+    data['CVL_CCFV_ID'] = this.cVLCCFVID;
+    data['CVL_NAME'] = this.cVLNAME;
+    data['CVL_STATUS'] = this.cVLSTATUS;
+    data['CVL_ID'] = this.cVLID;
+    data['CVL_COURSE_PDF'] = this.cVLCOURSEPDF;
+    data['CVL_VIDEO_URL'] = this.cVLVIDEOURL;
+    data['CVL_DESC'] = this.cVLDESC;
+    data['CCFV_ID'] = this.cCFVID;
+    data['CCFV_TT'] = this.cCFVTT;
+    data['CCFV_NAME'] = this.cCFVNAME;
+    data['CCFV_STATUS'] = this.cCFVSTATUS;
+    data['CCFV_COMMISION'] = this.cCFVCOMMISION;
+    data['CCFV_COURSE_IMAGE'] = this.cCFVCOURSEIMAGE;
+    data['CCFV_TOTAL_LESSONS'] = this.cCFVTOTALLESSONS;
+    data['CCFV_URL'] = this.cCFVURL;
     return data;
   }
 }
