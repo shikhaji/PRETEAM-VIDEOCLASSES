@@ -96,7 +96,7 @@ class _DemoScreenState extends State<DemoScreen> {
                 ProgressBar(
                   isExpanded: true,
 
-                  colors: ProgressBarColors(
+                  colors: const ProgressBarColors(
                     playedColor: AppColor.primaryColor,
                     handleColor: AppColor.primaryLightColor,
                   ),
@@ -126,7 +126,10 @@ class _DemoScreenState extends State<DemoScreen> {
           SizedBoxH34(),
           Align(
             alignment: Alignment.topLeft,
-            child: appText("Total Video Watched : "+getVideoPosition(),style: AppTextStyle.title),
+            child:
+              _controller.value.isPlaying?
+            appText("Total Video Watched : "+getVideoPosition(),style: AppTextStyle.title)
+                  :appText("Total Video Watched : "+getVideoPosition(),style: AppTextStyle.title)
           ),
 
 
@@ -142,6 +145,7 @@ class _DemoScreenState extends State<DemoScreen> {
     );
   }
   getVideoPosition() {
+
     var duration = Duration(milliseconds: _controller.value.position.inMilliseconds.round());
     return [duration.inMinutes, duration.inSeconds].map((seg) => seg.remainder(60).toString().padLeft(2, '0')).join(':');
   }

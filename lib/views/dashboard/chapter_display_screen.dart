@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pr_team/const/colors.dart';
+import 'package:pr_team/utils/function.dart';
 import 'package:pr_team/widgets/primary_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -137,11 +139,23 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
       ),
           SizedBoxH10(),
           SizedBoxH34(),
-          PrimaryButton(
-              lable: "DemoPage",
-              onPressed: (){
-                Navigator.pushNamed(context, Routs.demoScreen);
-              }
+          GestureDetector(
+            onTap: (){
+              //CommonFunctions.toast('Please wait the quiz is not yet started !');
+              Navigator.pushNamed(context, Routs.quizDetails);
+            },
+            child: Container(
+              height: Sizes.s50,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: AppColor.grey,
+                border: Border.all(
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Center(child: appText('Take Quiz',style: AppTextStyle.buttonTextStyle2)),
+            ),
           ),
           SizedBoxH34(),
           SizedBoxH34(),
@@ -158,10 +172,10 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
                 style: AppTextStyle.subTitle),
           ),
 
-
         ],
 
       ),
+
 
       appBar: SecondaryAppBar(
         title: "${widget.arguments?.ccCourseName}",
@@ -177,39 +191,72 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
       ):
       Material(
         color: AppColor.primaryColor,
-        child: InkWell(
-          onTap: () {
-            FileDownloader.downloadFile(url: pdfURL.trim(),
-                onProgress: (name, progress){
-                  setState(() {
-                    _progress = progress;
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            InkWell(
+              onTap: () {
+                FileDownloader.downloadFile(url: pdfURL.trim(),
+                    onProgress: (name, progress){
+                      setState(() {
+                        _progress = progress;
 
-                  });
-                },
-                onDownloadCompleted: (value){
-                  print('path $value');
-                  setState(() {
-                    _progress = null;
-                  });
-                  Fluttertoast.showToast(
-                    msg: 'Download Successfully',
-                    backgroundColor: Colors.grey,
-                  );
-                }
-            );
-          },
-          child: const SizedBox(
-            height: Sizes.s50,
-            width: double.infinity,
-            child: Center(
-              child: Text(
-                'Download Course Materials',
-                style: AppTextStyle.lable,
+                        });
+                    },
+                    onDownloadCompleted: (value){
+                      print('path $value');
+                      setState(() {
+                        _progress = null;
+                      });
+                      Fluttertoast.showToast(
+                        msg: 'Download Successfully',
+                        backgroundColor: Colors.grey,
+                      );
+                    }
+                );
+              },
+              child:  SizedBox(
+                height: Sizes.s50,
+
+                child: Center(
+                  child:Row(
+                    children: [
+                      //Icon(Icons.download,size: 35,),
+                      Text(
+                        'Download Course Materials',
+                        style: AppTextStyle.buttonTextStyle1,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
+            // InkWell(
+            //   onTap: () {
+            //     Navigator.pushNamed(context, Routs.quizDetails);
+            //   },
+            //   child:  SizedBox(
+            //     height: Sizes.s50,
+            //
+            //     child: Center(
+            //       child:Row(
+            //         children: [
+            //           Icon(Icons.quiz_outlined,size: 35,),
+            //           Text(
+            //             'Take Quiz',
+            //             style: AppTextStyle.buttonTextStyle1,
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
+
+          ],
         ),
       ),
+
+
     );
   }
 }

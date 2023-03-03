@@ -111,24 +111,6 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
         isLeading: true,
         leadingIcon: Icons.arrow_back,
       ),
-      bottomNavigationBar: Material(
-        color: AppColor.primaryColor,
-        child: InkWell(
-          onTap: () {
-            Navigator.pushNamed(context, Routs.quizDetails);
-          },
-          child: const SizedBox(
-            height: Sizes.s50,
-            width: double.infinity,
-            child: Center(
-              child: Text(
-                'Take Quiz',
-                style: AppTextStyle.lable,
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 
