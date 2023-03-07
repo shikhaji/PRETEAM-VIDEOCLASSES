@@ -10,7 +10,7 @@
     AppColor._();
 
     static const Color primaryColor = Color(0xFFa8172c);
-    static const Color primaryLightColor = Color(0xCAdad8d9);
+    static const Color primaryLightColor = Color(0xffa99b9b);
     static const Color drawerBackground = Color(0xffa99b9b);
     static const Color darkBlue = Color(0xFF0B204F);
     static const Color red = Color(0xffF41111);
