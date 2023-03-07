@@ -10,6 +10,7 @@ import '../views/auth/otp_verification_screen.dart';
 import '../views/auth/reset_password_screen.dart';
 import '../views/auth/signUp.dart';
 import '../views/dashboard/chapter_display_screen.dart';
+import '../views/dashboard/course_buy_screen.dart';
 import '../views/dashboard/course_details_screen.dart';
 import '../views/dashboard/fquestionScreen.dart';
 import '../views/dashboard/introduction_video_screen.dart';
@@ -40,6 +41,7 @@ class Routs {
   static const String quizDetails = "/quiz_details_screen";
   static const String questionScreen = "/quiz_screen";
   static const String demoScreen = "/demo";
+  static const String courseBuy = "/course_buy_screen";
 }
 
 class RoutGenerator {
@@ -121,6 +123,10 @@ class RoutGenerator {
       case Routs.demoScreen:
         return MaterialPageRoute(
             builder: (_) => DemoScreen());
+
+      case Routs.courseBuy:
+        return MaterialPageRoute(
+            builder: (_) => CourseBuyScreen(arguments: arguments as OtpArguments,));
 
       default:
         return null;

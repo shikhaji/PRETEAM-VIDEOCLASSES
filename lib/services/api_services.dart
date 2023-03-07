@@ -13,6 +13,7 @@ import '../model/fquestion_model.dart';
 import '../model/login_model.dart';
 import '../model/mobile_verify_model.dart';
 import '../model/my_profile_model.dart';
+import '../model/quiz_detail_model.dart';
 import '../model/slider_model.dart';
 import '../model/verify_center_code_model.dart';
 import '../routes/app_routes.dart';
@@ -513,4 +514,40 @@ class ApiService {
 
 
 
- }
+
+
+  //----------------------------CONTEST DETAILS API-----------------------//
+
+  Future<QuizDetails> quizDetails(
+      BuildContext context, {
+        FormData? data,
+      }) async {
+    try {
+      Loader.showLoader();
+      Response response;
+      response = await dio.post(EndPoints.quizDetail,
+          // options: Options(headers: {
+          //   "Client-Service": "frontend-client",
+          //   "Auth-Key": 'simplerestapi',
+          // }),
+          data: data);
+
+      if (response.statusCode == 200) {
+        QuizDetails responseData = QuizDetails.fromJson(response.data);
+
+        Loader.hideLoader();
+        debugPrint('responseData ----- > $responseData');
+        return responseData;
+      } else {
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      Loader.hideLoader();
+      debugPrint('Dio E  $e');
+      throw e.error;
+    }
+  }
+
+
+}

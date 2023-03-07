@@ -9,6 +9,7 @@ import 'package:pr_team/widgets/primary_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../model/course_categoryid_model.dart';
+import '../../model/quiz_detail_model.dart';
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
@@ -34,6 +35,7 @@ class ChapterDisplayScreen extends StatefulWidget {
 
 class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
   List<Course> getAllCourseDetails = [];
+
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   CarouselController buttonCarouselController = CarouselController();
@@ -86,6 +88,7 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
     });
 
   }
+
   @override
   void dispose() {
     _controller.dispose();

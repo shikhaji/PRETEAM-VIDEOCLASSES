@@ -13,6 +13,7 @@ import '../../utils/constant.dart';
 import '../../widgets/app_text.dart';
 import '../../widgets/custom_size_box.dart';
 import '../../widgets/primary_appbar.dart';
+import '../../widgets/primary_padding.dart';
 import '../../widgets/scrollview.dart';
 
 class CourseDetailsScreen extends StatefulWidget {
@@ -51,72 +52,81 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScroll(
-        children: [
-          SizedBoxH10(),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              image: DecorationImage(
-                image: NetworkImage(
-                    "https://vedioclasses.provisioningtech.com/uploads/${widget.arguments?.ccImg}"),
-                fit: BoxFit.cover,
-              ),
+        body: SafeArea(
+          child: PrimaryPadding(
+            child: Column(
+              children: [
+                SizedBoxH10(),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    image: DecorationImage(
+                      image:  NetworkImage("https://vedioclasses.provisioningtech.com/uploads/${widget.arguments?.ccImg}"),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  height: Sizes.s200.h,
+
+                ),
+                SizedBoxH34(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children:[
+                    Text("${getAllCourseDetails.length.toString()} Lessons",style: AppTextStyle.alertSubtitle),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppColor.primaryColor
+                      ),
+                      child: TextButton(onPressed: (){
+
+                        Navigator.pushNamed(context, Routs.paymentDes,arguments: OtpArguments(ccId:"${widget.arguments!.ccId}"));
+
+                      }, child: appText("Purchased Receipt",style: AppTextStyle.alertSubtitle1.copyWith(color: AppColor.white))),
+                    )
+                  ],
+                ),
+                SizedBoxH20(),
+                Expanded(
+                  child: SizedBox(
+                    height: Sizes.s320,
+                    child: SingleChildScrollView(
+                      child: ListView.builder(
+                        padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: getAllCourseDetails.length,
+                        itemBuilder: (context, inx) {
+                          return CoursesListContainer(
+                            name: getAllCourseDetails[inx].cCFVNAME ?? "",
+                            url: getAllCourseDetails[inx].cCFVURL ?? "",
+                            chapterName: getAllCourseDetails[inx].cVLNAME ?? "",
+                            chapterPdf: getAllCourseDetails[inx].cVLCOURSEPDF  ?? "",
+                            desc: getAllCourseDetails[inx].cVLDESC  ?? "",
+                            img: getAllCourseDetails[inx].cCFVCOURSEIMAGE  ?? "",
+
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                //Container
+
+              ],
             ),
-            height: Sizes.s200.h,
           ),
-          SizedBoxH34(),
-          Align(
-              alignment: Alignment.topLeft,
-              child: appText(
-                "${widget.arguments?.ccCourseName}",
-                style: AppTextStyle.title,
-              )),
-          SizedBoxH10(),
-          SizedBoxH30(),
-          Row(
-            children: [
-              Text("${getAllCourseDetails.length.toString()} Lessons",
-                  style: AppTextStyle.alertSubtitle)
-            ],
-          ),
-          SizedBoxH10(),
-          Container(
-            height: Sizes.s320,
-            child: SingleChildScrollView(
-              child: ListView.builder(
-                padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: getAllCourseDetails.length,
-                itemBuilder: (context, inx) {
-                  return CoursesListContainer(
-                    name: getAllCourseDetails[inx].cCFVNAME ?? "",
-                    minutes: "20 Minutes",
-                    url: getAllCourseDetails[inx].cCFVURL ?? "",
-                    chapterName: getAllCourseDetails[inx].cVLNAME ?? "",
-                    chapterPdf: getAllCourseDetails[inx].cVLCOURSEPDF ?? "",
-                    desc: getAllCourseDetails[inx].cVLDESC ?? "",
-                    img: getAllCourseDetails[inx].cCFVCOURSEIMAGE ?? "",
-                  );
-                },
-              ),
-            ),
-          ),
-          //Container
-        ],
-      ),
-      appBar: SecondaryAppBar(
-        title: "${widget.arguments?.ccCourseName}",
-        isLeading: true,
-        leadingIcon: Icons.arrow_back,
-      ),
+
+        ),
+        appBar: SecondaryAppBar(
+          title: "${widget.arguments?.ccCourseName}",
+          isLeading: true,
+          leadingIcon: Icons.arrow_back,
+        )
     );
   }
 
   Widget CoursesListContainer({
     required String name,
-    required String minutes,
     required String url,
     required String chapterName,
     required String chapterPdf,
@@ -128,70 +138,81 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
         Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: AppColor.textFieldColor,
+            border: Border.all(color: AppColor.grey,width: Sizes.s1.w),
+            color: AppColor.white,
             borderRadius: BorderRadius.circular(textFieldBorderRadius),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(12.0),
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
+
+                    Expanded(
                       child: Row(
                         children: [
                           Container(
-                            height: Sizes.s80.h,
-                            width: Sizes.s120.h,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://vedioclasses.provisioningtech.com/uploads/${widget.arguments?.ccImg}"),
-                                fit: BoxFit.cover,
-                              ),
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                  Colors.grey.withOpacity(0.5), //color of shadow
+                                  spreadRadius: 3, //spread radius
+                                  blurRadius: 5, // blur radius
+                                  offset: const Offset(0, 3),
+                                )
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              clipBehavior: Clip.antiAlias,
+                              child: Image.network("https://vedioclasses.provisioningtech.com/uploads/${widget.arguments?.ccImg}",fit: BoxFit.contain,height: Sizes.s100.h,width: Sizes.s100.h,),
                             ),
                           ),
-                          SizedBoxW8(),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              appText(chapterName,
-                                  style: AppTextStyle.alertSubtitle
-                                      .copyWith(fontSize: Sizes.s16.h)),
-                              SizedBoxH6(),
-                              appText(minutes,
-                                  style: AppTextStyle.alertSubtitle
-                                      .copyWith(fontSize: Sizes.s16.h)),
-                            ],
+
+                          SizedBox(
+                            width: Sizes.s18,
+                          ),
+                          Flexible(
+                            flex: 6,
+                            child: Text(chapterName,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 6,
+                              style: AppTextStyle.alertSubtitle1
+                                  .copyWith(fontSize: Sizes.s18.h,color: AppColor.black),
+                            ),
                           ),
                         ],
                       ),
+
                     ),
-                    Column(
-                      children: [
-                        SizedBox(
-                          height: 90,
-                          width: 35,
-                          child: GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, Routs.chapterDisplay,
-                                    arguments: OtpArguments(
-                                        ccUrl: url,
-                                        ccChapterName: name,
-                                        ccCourseName: chapterName,
-                                        ccChapterPdf: chapterPdf,
-                                        ccDesc: desc,
-                                        ccImg: img));
-                                //  clearField();
-                              },
-                              child: Image.asset(AppAsset.playButton)),
-                        ),
-                      ],
+                    CircleAvatar(
+                      child: IconButton(
+
+                        onPressed: (){
+                          Navigator.pushNamed(context, Routs.chapterDisplay,
+                              arguments: OtpArguments(
+                                  ccUrl: url,
+                                  ccChapterName: name,
+                                  ccCourseName: chapterName,
+                                  ccChapterPdf: chapterPdf,
+                                  ccDesc: desc,
+                                  ccImg: img
+                              ));
+                          //  clearField();
+
+                        },
+                        icon: Icon(Icons.play_arrow),
+                        color: AppColor.white,
+                      ),
+                      backgroundColor: AppColor.drawerBackground,
+
                     ),
+
                   ],
                 ),
               ],

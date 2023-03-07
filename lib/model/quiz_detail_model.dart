@@ -1,4 +1,33 @@
 class QuizDetails {
+  int? status;
+  String? message;
+  List<CONTEST>? cONTEST;
+
+  QuizDetails({this.status, this.message, this.cONTEST});
+
+  QuizDetails.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    if (json['CONTEST'] != null) {
+      cONTEST = <CONTEST>[];
+      json['CONTEST'].forEach((v) {
+        cONTEST!.add(new CONTEST.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
+    if (this.cONTEST != null) {
+      data['CONTEST'] = this.cONTEST!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class CONTEST {
   String? cONTESTID;
   String? cONTESTTT;
   String? cONTESTSTARTDATE;
@@ -43,7 +72,7 @@ class QuizDetails {
   String? cCFVTOTALLESSONS;
   String? cCFVURL;
 
-  QuizDetails(
+  CONTEST(
       {this.cONTESTID,
         this.cONTESTTT,
         this.cONTESTSTARTDATE,
@@ -88,7 +117,7 @@ class QuizDetails {
         this.cCFVTOTALLESSONS,
         this.cCFVURL});
 
-  QuizDetails.fromJson(Map<String, dynamic> json) {
+  CONTEST.fromJson(Map<String, dynamic> json) {
     cONTESTID = json['CONTEST_ID'];
     cONTESTTT = json['CONTEST_TT'];
     cONTESTSTARTDATE = json['CONTEST_START_DATE'];

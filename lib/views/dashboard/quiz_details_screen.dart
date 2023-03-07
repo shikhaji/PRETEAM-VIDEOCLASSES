@@ -1,7 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pr_team/utils/app_color.dart';
+import '../../model/quiz_detail_model.dart';
 import '../../routes/app_routes.dart';
+import '../../routes/arguments.dart';
+import '../../services/api_services.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_sizes.dart';
 import '../../utils/app_text_style.dart';
@@ -11,13 +15,33 @@ import '../../widgets/primary_appbar.dart';
 import '../../widgets/scrollview.dart';
 
 class QuizDetailsScreen extends StatefulWidget {
-  const QuizDetailsScreen({Key? key}) : super(key: key);
+  final OtpArguments? arguments;
+  const QuizDetailsScreen({Key? key, this.arguments}) : super(key: key);
+
 
   @override
   State<QuizDetailsScreen> createState() => _QuizDetailsScreenState();
+
+
 }
 
 class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
+  List<CONTEST> getAllQuizDetails = [];
+  Future<void> QuizDetail() async {
+
+    FormData data() {
+      return FormData.fromMap({
+        "courseid": widget.arguments?.ccId,
+      });
+    }
+    ApiService().categoryById(context,data: data()).then((value){
+
+      setState(() {
+        getAllQuizDetails=value.course!.cast<CONTEST>();
+      });
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

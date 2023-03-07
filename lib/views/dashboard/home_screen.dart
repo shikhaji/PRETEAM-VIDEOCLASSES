@@ -249,78 +249,100 @@ class _HomeScreenState extends State<HomeScreen> {
       ){
     return Column(
       children: [
-        GestureDetector(
-          onTap: (){
-            Navigator.pushNamed(context, Routs.introductionVideo,
-                arguments: OtpArguments(ccUrl: ccIntroVideo)
-            );
-          },
-          child: Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColor.textFieldColor,
-              borderRadius: BorderRadius.circular(textFieldBorderRadius),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+        Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColor.grey,width: Sizes.s1.w),
+            color: AppColor.white,
+            borderRadius: BorderRadius.circular(textFieldBorderRadius),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
 
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Container(
-                              height: Sizes.s80.h,
-                              width: Sizes.s120.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                shape: BoxShape.rectangle,
-                                image: DecorationImage(
-                                  image:  NetworkImage("https://vedioclasses.provisioningtech.com/uploads/${image}"),
-                                  fit: BoxFit.fitHeight,
-                                ),
-                              ),
-                            ),
-                            SizedBoxW8(),
-                            Flexible(
-                              flex: 6,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(name,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 5,
-                                    style: AppTextStyle.alertSubtitle
-                                        .copyWith(fontSize: Sizes.s14.h),
-                                  ),
-                                  SizedBoxH8(),
-                                  appText(lessons,
-                                      style: AppTextStyle.alertSubtitle)
-
-
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Column(
+                    Expanded(
+                      child: Row(
                         children: [
-                          SizedBoxH8(),
-                          appText(displayAmount,
-                              style: AppTextStyle.headingTextTile
-                                  .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                  Colors.grey.withOpacity(0.5), //color of shadow
+                                  spreadRadius: 3, //spread radius
+                                  blurRadius: 5, // blur radius
+                                  offset: const Offset(0, 3),
+                                )
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              clipBehavior: Clip.antiAlias,
+                              child: Image.network("https://vedioclasses.provisioningtech.com/uploads/${image}",fit: BoxFit.contain,height: Sizes.s100.h,width: Sizes.s100.h,),
+                            ),
+                          ),
+
+                          SizedBox(
+                            width: Sizes.s18,
+                          ),
+                          Flexible(
+                            flex: 6,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(name,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 6,
+                                  style: AppTextStyle.alertSubtitle1
+                                      .copyWith(fontSize: Sizes.s18.h,color: AppColor.black),
+                                ),
+                                SizedBoxH8(),
+                                Text("${lessons}Lessons",
+                                    style: AppTextStyle.alertSubtitle1.copyWith(fontSize: Sizes.s14.h)),
+                                SizedBoxH8(),
+                                appText(displayAmount,
+                                    style: AppTextStyle.title
+                                        .copyWith(fontSize: Sizes.s14.h,color: AppColor.primaryColor)),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                    ],
-                  ),
-                ],
-              ),
+
+                    ),
+                    CircleAvatar(
+                      child: IconButton(
+
+                        onPressed: (){
+                          Navigator.pushNamed(context, Routs.courseBuy,
+                              arguments: OtpArguments(
+                                ccId: ccid,
+                                ccUrl: ccIntroVideo,
+                                ccCourseName: name,
+                                // ccDesc: ccDescription,
+                                ccAmount: amount,
+                                ccLessons: lessons,
+                              )
+
+                          );
+                        },
+                        icon: Icon(Icons.arrow_forward_ios),
+                        color: AppColor.white,
+                      ),
+                      backgroundColor: AppColor.primaryColor,
+
+                    ),
+
+                  ],
+                ),
+              ],
             ),
           ),
         ),
