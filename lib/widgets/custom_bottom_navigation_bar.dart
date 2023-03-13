@@ -1,7 +1,5 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../utils/app_assets.dart';
 import '../utils/app_color.dart';
 import '../utils/app_text_style.dart';
@@ -36,6 +34,7 @@ class PrimaryBottomNavigationBar extends StatelessWidget {
           activeIcon: _buildImageIcon(AppAsset.homeFill),
         ),
         BottomNavigationBarItem(
+
           label: 'Courses',
           icon: _buildImageIcon(AppAsset.category),
           activeIcon: _buildImageIcon(AppAsset.categoryFill),

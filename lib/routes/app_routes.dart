@@ -1,8 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:pr_team/views/dashboard/demo.dart';
-import 'package:pr_team/views/dashboard/quiz_details_screen.dart';
-import 'package:pr_team/views/dashboard/quiz_screen.dart';
 import '../views/auth/edit_profile.dart';
 import '../views/auth/login_screen.dart';
 import '../views/auth/mobile_verification_screen.dart';
@@ -15,8 +12,11 @@ import '../views/dashboard/course_details_screen.dart';
 import '../views/dashboard/fquestionScreen.dart';
 import '../views/dashboard/introduction_video_screen.dart';
 import '../views/dashboard/main_home_screen.dart';
+import '../views/dashboard/my_class.dart';
 import '../views/dashboard/my_order_screen.dart';
 import '../views/dashboard/payment_Desecription.dart';
+import '../views/dashboard/quiz_details_screen.dart';
+import '../views/dashboard/quiz_screen.dart';
 import '../views/dashboard/video_player_screen.dart';
 import '../views/splash/splash_screen.dart';
 import 'arguments.dart';
@@ -38,10 +38,10 @@ class Routs {
   static const String paymentDes = "/payment_Desecripiton";
   static const String chapterDisplay = "/chapter_display_screen";
   static const String introductionVideo = "/introduction_video_screen";
+  static const String courseBuy = "/course_buy_screen";
+  static const String myClass = "/my_class";
   static const String quizDetails = "/quiz_details_screen";
   static const String questionScreen = "/quiz_screen";
-  static const String demoScreen = "/demo";
-  static const String courseBuy = "/course_buy_screen";
 }
 
 class RoutGenerator {
@@ -73,7 +73,6 @@ class RoutGenerator {
         return MaterialPageRoute(
             builder: (_) =>  MainHomeScreen(arguments: arguments as OtpArguments?,));
 
-
       case Routs.resetPassword:
         return MaterialPageRoute(
             builder: (_) => ResetPasswordScreen(arguments: arguments as OtpArguments,));
@@ -98,7 +97,7 @@ class RoutGenerator {
 
       case Routs.myOrder:
         return MaterialPageRoute(
-            builder: (_) => MyOrderScreen());
+            builder: (_) => MyOrderScreen(arguments: arguments as OtpArguments,));
 
       case Routs.paymentDes:
         return MaterialPageRoute(
@@ -112,6 +111,14 @@ class RoutGenerator {
         return MaterialPageRoute(
             builder: (_) => IntroductionVideo(arguments: arguments as OtpArguments,));
 
+      case Routs.courseBuy:
+        return MaterialPageRoute(
+            builder: (_) => CourseBuyScreen(arguments: arguments as OtpArguments,));
+
+      case Routs.myClass:
+        return MaterialPageRoute(
+            builder: (_) => MyClassScreen(arguments: arguments as OtpArguments,));
+
       case Routs.quizDetails:
         return MaterialPageRoute(
             builder: (_) => QuizDetailsScreen());
@@ -119,15 +126,6 @@ class RoutGenerator {
       case Routs.questionScreen:
         return MaterialPageRoute(
             builder: (_) => QuizScreen());
-
-      case Routs.demoScreen:
-        return MaterialPageRoute(
-            builder: (_) => DemoScreen());
-
-      case Routs.courseBuy:
-        return MaterialPageRoute(
-            builder: (_) => CourseBuyScreen(arguments: arguments as OtpArguments,));
-
       default:
         return null;
     }

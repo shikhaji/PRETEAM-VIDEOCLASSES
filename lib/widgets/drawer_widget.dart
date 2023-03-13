@@ -13,7 +13,7 @@ import '../utils/app_color.dart';
 import '../utils/app_sizes.dart';
 import '../utils/app_text_style.dart';
 import '../utils/screen_utils.dart';
-import '../views/auth/login_screen.dart';
+import '../views/Auth/login_screen.dart';
 class DrawerWidget extends StatefulWidget {
 
   const DrawerWidget({Key? key}) : super(key: key);
@@ -22,7 +22,7 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerState extends State<DrawerWidget> {
-  Course? myProfileData;
+  ProfileModel? myProfileData;
 
   @override
   void initState() {

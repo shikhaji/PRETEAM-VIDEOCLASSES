@@ -8,6 +8,7 @@ import '../../widgets/custom_bottom_navigation_bar.dart';
 import '../../widgets/drawer_widget.dart';
 import 'categories_screen.dart';
 import 'home_screen.dart';
+import 'my_class.dart';
 import 'my_order_screen.dart';
 
 class MainHomeScreen extends StatefulWidget {
@@ -70,9 +71,9 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
       case 0:
         return const HomeScreen();
       case 1:
-        return const CategoriesScreen();
+          return const CategoriesScreen();
       case 2:
-        return const MyOrderScreen();
+        return const MyClassScreen();
       case 3:
         return const ProfileScreen();
       default:
@@ -80,4 +81,3 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
     return Container();
   }
 }
-

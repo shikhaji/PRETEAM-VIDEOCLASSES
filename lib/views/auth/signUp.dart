@@ -1,3 +1,4 @@
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -140,17 +141,17 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
 
                         ApiService().verifyCenterCode(context,data: cc()).then((value) {
                           if(value.status== 200){
-                            setState(() {
-                              _centerCodeNAme.text = "${value.center!.branchName}";
-                            });
-                            print("name := ${centerCodeName}");
+                         setState(() {
+                           _centerCodeNAme.text = "${value.center!.branchName}";
+                         });
+                          print("name := ${centerCodeName}");
                           }else{
 
                           }
                         });
                       }
                     })
-                    :   PrimaryButton(
+             :   PrimaryButton(
                     lable: "Sign Up",
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {

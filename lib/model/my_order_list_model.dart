@@ -35,14 +35,17 @@ class GetOrderList {
   String? pLCPAYMENTDATE;
   String? pLCPAYMENTSTATUS;
   String? pLCLOGINID;
-  String? cCFVID;
-  String? cCFVTT;
-  String? cCFVNAME;
-  String? cCFVSTATUS;
-  String? cCFVCOMMISION;
-  String? cCFVCOURSEIMAGE;
-  String? cCFVTOTALLESSONS;
-  String? cCFVURL;
+  String? pCLCENTERCOMISSION;
+  String? pCLADMINCOMMISION;
+  String? cMCID;
+  String? cMCTT;
+  String? cMCNAME;
+  String? cMCSTATUS;
+  String? cMCCOMMISION;
+  String? cMCIMAGE;
+  String? cMCCHAPTERS;
+  String? cMCINTROURL;
+  String? cMCDESC;
 
   GetOrderList(
       {this.pCLID,
@@ -52,14 +55,17 @@ class GetOrderList {
         this.pLCPAYMENTDATE,
         this.pLCPAYMENTSTATUS,
         this.pLCLOGINID,
-        this.cCFVID,
-        this.cCFVTT,
-        this.cCFVNAME,
-        this.cCFVSTATUS,
-        this.cCFVCOMMISION,
-        this.cCFVCOURSEIMAGE,
-        this.cCFVTOTALLESSONS,
-        this.cCFVURL});
+        this.pCLCENTERCOMISSION,
+        this.pCLADMINCOMMISION,
+        this.cMCID,
+        this.cMCTT,
+        this.cMCNAME,
+        this.cMCSTATUS,
+        this.cMCCOMMISION,
+        this.cMCIMAGE,
+        this.cMCCHAPTERS,
+        this.cMCINTROURL,
+        this.cMCDESC});
 
   GetOrderList.fromJson(Map<String, dynamic> json) {
     pCLID = json['PCL_ID'];
@@ -69,14 +75,17 @@ class GetOrderList {
     pLCPAYMENTDATE = json['PLC_PAYMENT_DATE'];
     pLCPAYMENTSTATUS = json['PLC_PAYMENT_STATUS'];
     pLCLOGINID = json['PLC_LOGIN_ID'];
-    cCFVID = json['CCFV_ID'];
-    cCFVTT = json['CCFV_TT'];
-    cCFVNAME = json['CCFV_NAME'];
-    cCFVSTATUS = json['CCFV_STATUS'];
-    cCFVCOMMISION = json['CCFV_COMMISION'];
-    cCFVCOURSEIMAGE = json['CCFV_COURSE_IMAGE'];
-    cCFVTOTALLESSONS = json['CCFV_TOTAL_LESSONS'];
-    cCFVURL = json['CCFV_URL'];
+    pCLCENTERCOMISSION = json['PCL_CENTER_COMISSION'];
+    pCLADMINCOMMISION = json['PCL_ADMIN_COMMISION'];
+    cMCID = json['CMC_ID'];
+    cMCTT = json['CMC_TT'];
+    cMCNAME = json['CMC_NAME'];
+    cMCSTATUS = json['CMC_STATUS'];
+    cMCCOMMISION = json['CMC_COMMISION'];
+    cMCIMAGE = json['CMC_IMAGE'];
+    cMCCHAPTERS = json['CMC_CHAPTERS'];
+    cMCINTROURL = json['CMC_INTRO_URL'];
+    cMCDESC = json['CMC_DESC'];
   }
 
   Map<String, dynamic> toJson() {
@@ -88,14 +97,17 @@ class GetOrderList {
     data['PLC_PAYMENT_DATE'] = this.pLCPAYMENTDATE;
     data['PLC_PAYMENT_STATUS'] = this.pLCPAYMENTSTATUS;
     data['PLC_LOGIN_ID'] = this.pLCLOGINID;
-    data['CCFV_ID'] = this.cCFVID;
-    data['CCFV_TT'] = this.cCFVTT;
-    data['CCFV_NAME'] = this.cCFVNAME;
-    data['CCFV_STATUS'] = this.cCFVSTATUS;
-    data['CCFV_COMMISION'] = this.cCFVCOMMISION;
-    data['CCFV_COURSE_IMAGE'] = this.cCFVCOURSEIMAGE;
-    data['CCFV_TOTAL_LESSONS'] = this.cCFVTOTALLESSONS;
-    data['CCFV_URL'] = this.cCFVURL;
+    data['PCL_CENTER_COMISSION'] = this.pCLCENTERCOMISSION;
+    data['PCL_ADMIN_COMMISION'] = this.pCLADMINCOMMISION;
+    data['CMC_ID'] = this.cMCID;
+    data['CMC_TT'] = this.cMCTT;
+    data['CMC_NAME'] = this.cMCNAME;
+    data['CMC_STATUS'] = this.cMCSTATUS;
+    data['CMC_COMMISION'] = this.cMCCOMMISION;
+    data['CMC_IMAGE'] = this.cMCIMAGE;
+    data['CMC_CHAPTERS'] = this.cMCCHAPTERS;
+    data['CMC_INTRO_URL'] = this.cMCINTROURL;
+    data['CMC_DESC'] = this.cMCDESC;
     return data;
   }
 }

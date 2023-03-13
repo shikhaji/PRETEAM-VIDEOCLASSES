@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -6,22 +6,23 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pr_team/services/shared_preferences.dart';
 import '../API/dio_client.dart';
 import '../API/url.dart';
+import '../model/all_main_course_model.dart';
+import '../model/all_main_purchased_course.dart';
 import '../model/course_category_model.dart';
 import '../model/course_categoryid_model.dart';
 import '../model/course_purchased_model.dart';
 import '../model/fquestion_model.dart';
 import '../model/login_model.dart';
 import '../model/mobile_verify_model.dart';
+import '../model/my_order_list_model.dart';
 import '../model/my_profile_model.dart';
-import '../model/quiz_detail_model.dart';
 import '../model/slider_model.dart';
 import '../model/verify_center_code_model.dart';
 import '../routes/app_routes.dart';
 import '../routes/arguments.dart';
 import '../utils/function.dart';
 import '../utils/loader.dart';
-import '../views/auth/login_screen.dart';
-import 'package:http/http.dart' as http;
+import '../views/Auth/login_screen.dart';
 
 class ApiService {
   ApiClient apiClient = ApiClient();
@@ -246,10 +247,60 @@ class ApiService {
       throw e.error;
     }
   }
+  //-----------------------GET ALL MAIN COURSE CATEGORY API-----------------------//
 
+  Future<GetAllMainCourse> getAllMainCourses(BuildContext context,{
+    FormData? data,
+  }) async {
+    try {
+      Loader.showLoader();
+      Response response;
+      response = await dio.post(EndPoints.allMainCourse,data: data);
+
+      if (response.statusCode == 200) {
+        GetAllMainCourse responseData = GetAllMainCourse.fromJson(response.data);
+        Loader.hideLoader();
+        debugPrint('GetAllCourse responseData ----- > ${response.data}');
+        return responseData;
+      } else {
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      Loader.hideLoader();
+      debugPrint('Dio E  $e');
+      throw e.error;
+    }
+  }
+
+  //-----------------------GET ALL MAIN PURCHASED COURSE CATEGORY API-----------------------//
+
+  Future<GetAllMainPurchasedCourse> getAllMainPurchasedCourses(BuildContext context,{
+    FormData? data,
+  }) async {
+    try {
+      Loader.showLoader();
+      Response response;
+      response = await dio.post(EndPoints.allMainCourse,data: data);
+
+      if (response.statusCode == 200) {
+        GetAllMainPurchasedCourse responseData = GetAllMainPurchasedCourse.fromJson(response.data);
+        Loader.hideLoader();
+        debugPrint('GetAllCourse responseData ----- > ${response.data}');
+        return responseData;
+      } else {
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      Loader.hideLoader();
+      debugPrint('Dio E  $e');
+      throw e.error;
+    }
+  }
   //-----------------------COURSE PURCHASED CATEGORY API-----------------------//
 
-  Future<GetPurchasedCourseCategory> getPurchasedCourses(BuildContext context,{
+  Future<GetAllCourseCategory> getPurchasedCourses(BuildContext context,{
     FormData? data,
   }) async {
     try {
@@ -258,7 +309,7 @@ class ApiService {
       response = await dio.post(EndPoints.getAllCourseCategory,data: data);
 
       if (response.statusCode == 200) {
-        GetPurchasedCourseCategory responseData = GetPurchasedCourseCategory.fromJson(response.data);
+        GetAllCourseCategory responseData = GetAllCourseCategory.fromJson(response.data);
         Loader.hideLoader();
         debugPrint('GetAllCourse responseData ----- > ${response.data}');
         return responseData;
@@ -305,13 +356,13 @@ class ApiService {
     }
   }
 
-
+//------------------ GET MY ORDER LIST API--------------------------------/////////
   Future getOrderListAPi(BuildContext context, {
     Map? data,
   }) async {
     try {
       Loader.showLoader();
-   var url = EndPoints.getMyOrderList;
+   var url = "https://vedioclasses.provisioningtech.com/get_ajax/get_my_order_list";
       var response = await http.post(
         Uri.parse(url),
 
@@ -386,8 +437,9 @@ class ApiService {
       if (response.statusCode == 200) {
         debugPrint('Update profile data  ----- > ${response.data}');
         Loader.hideLoader();
-
-        Navigator.pushNamed(context, Routs.mainHome);
+        Navigator.pushNamedAndRemoveUntil(
+            context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 3), (route) => false);
+       //Navigator.pushNamed(context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 3));
         Fluttertoast.showToast(
           msg: 'Updated Sucessfully...',
           backgroundColor: Colors.grey,
@@ -427,9 +479,9 @@ class ApiService {
           }),
           data: data);
       if (response.statusCode == 200) {
-        debugPrint('Add Purchase Data  ----- > ${response.data}');
+        debugPrint('Update profile data  ----- > ${response.data}');
         Loader.hideLoader();
-        // Navigator.pushNamed(context, Routs.editProfile);
+        Navigator.pushNamed(context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 2));
         Fluttertoast.showToast(
           msg: 'Your course purchased Successfully...',
           backgroundColor: Colors.grey,
@@ -513,41 +565,4 @@ class ApiService {
 
 
 
-
-
-
-  //----------------------------CONTEST DETAILS API-----------------------//
-
-  Future<QuizDetails> quizDetails(
-      BuildContext context, {
-        FormData? data,
-      }) async {
-    try {
-      Loader.showLoader();
-      Response response;
-      response = await dio.post(EndPoints.quizDetail,
-          // options: Options(headers: {
-          //   "Client-Service": "frontend-client",
-          //   "Auth-Key": 'simplerestapi',
-          // }),
-          data: data);
-
-      if (response.statusCode == 200) {
-        QuizDetails responseData = QuizDetails.fromJson(response.data);
-
-        Loader.hideLoader();
-        debugPrint('responseData ----- > $responseData');
-        return responseData;
-      } else {
-        Loader.hideLoader();
-        throw Exception(response.data);
-      }
-    } on DioError catch (e) {
-      Loader.hideLoader();
-      debugPrint('Dio E  $e');
-      throw e.error;
-    }
-  }
-
-
-}
+ }

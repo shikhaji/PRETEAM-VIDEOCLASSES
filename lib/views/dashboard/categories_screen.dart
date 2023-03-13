@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import '../../model/all_main_course_model.dart';
 import '../../model/check_course_model.dart';
-import '../../model/course_category_model.dart';
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
@@ -17,6 +17,7 @@ import '../../widgets/app_text.dart';
 import '../../widgets/custom_size_box.dart';
 import '../../widgets/drawer_widget.dart';
 import '../../widgets/primary_appbar.dart';
+import '../../widgets/primary_padding.dart';
 import '../../widgets/primary_textfield.dart';
 import '../../widgets/scrollview.dart';
 
@@ -28,14 +29,14 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
-  List<Course> getAllCourses=[];
+  List<MainCourse> getAllCourses=[];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _searchController = TextEditingController();
   late var _razorpay;
   String courseId ="";
   String loginId ="";
 
-  List<Course> allCourseListRes = [];
+  List<MainCourse> allCourseListRes = [];
   List<CheckCourse> checkCourseList = [];
   bool _isSearching = false;
 
@@ -56,6 +57,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     callApi();
 
+
   }
 
   Future<void> callApi()async {
@@ -66,15 +68,15 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         "status" :"0",
       });
     }
-    GetAllCourseCategory? _getAllCourseCategory= await ApiService().getAllCourses(context,data: data());
+    GetAllMainCourse? _getAllCourseCategory= await ApiService().getAllMainCourses(context,data: data());
 
     if(_getAllCourseCategory != null){
 
-      getAllCourses = _getAllCourseCategory.course
-          .map((e) => Course.fromJson(e.toJson()))
+      getAllCourses = _getAllCourseCategory.course!
+          .map((e) => MainCourse.fromJson(e.toJson()))
           .toList();
-      allCourseListRes = _getAllCourseCategory.course
-          .map((e) => Course.fromJson(e.toJson()))
+      allCourseListRes = _getAllCourseCategory.course!
+          .map((e) => MainCourse.fromJson(e.toJson()))
           .toList();
       setState(() {});
     }
@@ -102,9 +104,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     setState(() {});
   }
 
-  List<Course> searchCourse(String qurey) {
+  List<MainCourse> searchCourse(String qurey) {
     return allCourseListRes
-        .where((e) => e.ccfvName.toLowerCase().contains(qurey.toLowerCase()))
+        .where((e) => e.cMCNAME!.toLowerCase().contains(qurey.toLowerCase()))
         .toList();
   }
 
@@ -154,65 +156,73 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           ),
           child: const DrawerWidget(),
         ),
-        body: CustomScroll(
-          children: [
-            SizedBoxH18(),
-            PrimaryTextField(
-              controller: _searchController,
-              onChanged: _onSearchHandler,
-              hintText: 'Search Course',
-              color: AppColor.textFieldColor,
-              suffix: _isSearching
-                  ? InkWell(
-                onTap: () {
-                  _searchController.clear();
-                  _isSearching = false;
-                  getAllCourses.clear();
-                  getAllCourses = allCourseListRes;
-                  setState(() {});
-                },
-                child: const Padding(
-                  padding: EdgeInsets.only(right: 10),
-                  child: Icon(
-                    Icons.clear,
-                    color: Colors.black,
+        body: SafeArea(
+          child: PrimaryPadding(
+            child: Column(
+              children: [
+                SizedBoxH18(),
+                PrimaryTextField(
+                  controller: _searchController,
+                  onChanged: _onSearchHandler,
+                  hintText: 'Search Course',
+                  color: AppColor.textFieldColor,
+                  suffix: _isSearching
+                      ? InkWell(
+                    onTap: () {
+                      _searchController.clear();
+                      _isSearching = false;
+                      getAllCourses.clear();
+                      getAllCourses = allCourseListRes;
+                      setState(() {});
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: Icon(
+                        Icons.clear,
+                        color: Colors.black,
+                      ),
+                    ),
+                  )
+                      : null,
+                ),
+                SizedBoxH8(),
+                Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("All Courses ",style: AppTextStyle.alertSubtitle.copyWith(color: AppColor.drawerBackground))),
+                SizedBoxH8(),
+
+                Expanded(
+                  child: SizedBox(
+                    height: Sizes.s600,
+                    child:SingleChildScrollView(
+                      child: ListView.builder(
+                        padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: getAllCourses.length,
+                        itemBuilder: (context, inx) {
+                          return CoursesListContainer(
+                              image:getAllCourses[inx].cMCIMAGE ?? "",
+                              name:getAllCourses[inx].cMCNAME ?? "",
+                              lessons: "${getAllCourses[inx].cMCCHAPTERS ?? ""} ",
+                              displayAmount: "₹${getAllCourses[inx].cMCCOMMISION ?? ""}",
+                              ccid: getAllCourses[inx].cMCID ?? "",
+                              ccstatus: getAllCourses[inx].cMCSTATUS ?? "",
+                              ccIntroVideo: getAllCourses[inx].cMCINTROURL ?? "",
+                              ccDescription: getAllCourses[inx].cMCDESC ?? "",
+                              amount: "${getAllCourses[inx].cMCCOMMISION ?? ""
+                              }"
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 ),
-              )
-                  : null,
+                //Container
+
+              ],
             ),
-
-           Align(
-              alignment: Alignment.topLeft,
-                child: Text("All Courses ",style: AppTextStyle.alertSubtitle)),
-
-            Container(
-              height: Sizes.s600,
-              child:SingleChildScrollView(
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: getAllCourses.length,
-                  itemBuilder: (context, inx) {
-                    return CoursesListContainer(
-                        image:getAllCourses[inx].ccfvCourseImage ?? "",
-                        name:getAllCourses[inx].ccfvName ?? "",
-                        lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
-                        displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
-                        ccid: getAllCourses[inx].ccfvId ?? "",
-                        ccstatus: getAllCourses[inx].ccfvStatus ?? "",
-                        ccIntroVideo: getAllCourses[inx].ccfvUrl ?? "",
-                        amount: "${getAllCourses[inx].ccfvCommision ?? ""
-                        }"
-                    );
-                  },
-                ),
-              ),
-            ),
-            //Container
-
-          ],
+          ),
         ),
         appBar: SecondaryAppBar(
           title: "All Courses",
@@ -232,6 +242,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   required String ccid,
   required String ccstatus,
   required String ccIntroVideo,
+  required String ccDescription,
   }
       ){
     return Column(
@@ -254,52 +265,52 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     Expanded(
                       child: Row(
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color:
-                                  Colors.grey.withOpacity(0.5), //color of shadow
-                                  spreadRadius: 3, //spread radius
-                                  blurRadius: 5, // blur radius
-                                  offset: const Offset(0, 3),
-                                )
-                              ],
-                            ),
-                            child: ClipRRect(
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color:
+                                Colors.grey.withOpacity(0.5), //color of shadow
+                                spreadRadius: 3, //spread radius
+                                blurRadius: 5, // blur radius
+                                offset: const Offset(0, 3),
+                              )
+                            ],
+                          ),
+                          child: ClipRRect(
                               borderRadius: BorderRadius.circular(12),
                               clipBehavior: Clip.antiAlias,
                               child: Image.network("https://vedioclasses.provisioningtech.com/uploads/${image}",fit: BoxFit.contain,height: Sizes.s100.h,width: Sizes.s100.h,),
                             ),
-                          ),
+                        ),
 
-                          SizedBox(
-                            width: Sizes.s18,
-                          ),
-                          Flexible(
-                            flex: 6,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(name,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 6,
-                                  style: AppTextStyle.alertSubtitle1
-                                      .copyWith(fontSize: Sizes.s18.h,color: AppColor.black),
-                                ),
-                                SizedBoxH8(),
-                                Text("${lessons}Lessons",
-                                    style: AppTextStyle.alertSubtitle1.copyWith(fontSize: Sizes.s14.h)),
-                                SizedBoxH8(),
-                                appText(displayAmount,
-                                    style: AppTextStyle.title
-                                        .copyWith(fontSize: Sizes.s14.h,color: AppColor.primaryColor)),
-                              ],
-                            ),
-                          ),
+                         SizedBox(
+                           width: Sizes.s18,
+                         ),
+                      Flexible(
+                        flex: 6,
+                        child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(name,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 6,
+                                      style: AppTextStyle.alertSubtitle1
+                                          .copyWith(fontSize: Sizes.s18.h,color: AppColor.black),
+                                  ),
+                                  SizedBoxH8(),
+                                  Text("${lessons}Lessons",
+                                      style: AppTextStyle.alertSubtitle1.copyWith(fontSize: Sizes.s14.h)),
+                                  SizedBoxH8(),
+                                  appText(displayAmount,
+                                      style: AppTextStyle.title
+                                          .copyWith(fontSize: Sizes.s14.h,color: AppColor.primaryColor)),
+                                ],
+                              ),
+                      ),
                         ],
                       ),
 
@@ -310,12 +321,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         onPressed: (){
                           Navigator.pushNamed(context, Routs.courseBuy,
                               arguments: OtpArguments(
-                                ccId: ccid,
-                                ccUrl: ccIntroVideo,
-                                ccCourseName: name,
-                                // ccDesc: ccDescription,
-                                ccAmount: amount,
-                                ccLessons: lessons,
+                                  ccId: ccid,
+                                  ccUrl: ccIntroVideo,
+                                  ccCourseName: name,
+                                  ccDesc: ccDescription,
+                                  ccAmount: amount,
+                                  ccLessons: lessons,
                               )
 
                           );
@@ -333,7 +344,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             ),
           ),
         ),
-        SizedBoxH10(),
+        SizedBoxH14(),
       ],
     );
 

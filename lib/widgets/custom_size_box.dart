@@ -44,14 +44,6 @@ class SizedBoxH120 extends SizedBox {
   SizedBoxH120({Key? key}) : super(key: key, height: Sizes.s120.h);
 }
 
-class SizedBoxW40 extends SizedBox {
-  SizedBoxW40({Key? key}) : super(key: key, width: Sizes.s40.w);
-}
-
-class SizedBoxW15 extends SizedBox {
-  SizedBoxW15({Key? key}) : super(key: key, width: Sizes.s15.w);
-}
-
 class SizedBoxW10 extends SizedBox {
   SizedBoxW10({Key? key}) : super(key: key, width: Sizes.s10.w);
 }

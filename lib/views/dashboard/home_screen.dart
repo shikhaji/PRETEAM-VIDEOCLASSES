@@ -3,8 +3,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pr_team/model/all_main_course_model.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-import '../../model/course_category_model.dart';
+import '../../model/my_profile_model.dart';
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
@@ -18,6 +19,7 @@ import '../../widgets/app_text.dart';
 import '../../widgets/custom_size_box.dart';
 import '../../widgets/drawer_widget.dart';
 import '../../widgets/primary_appbar.dart';
+import '../../widgets/primary_padding.dart';
 import '../../widgets/scrollview.dart';
 import 'main_home_screen.dart';
 
@@ -35,8 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedSliderIndex = 0;
   List sliderImageList = [];
   List latestNewsList = [];
-  List<Course> getAllCourses=[];
-  List<Course> allCourseListRes = [];
+  List<MainCourse> getAllCourses=[];
+  List<MainCourse> allCourseListRes = [];
+  ProfileModel? myProfileData;
   bool _isSearching = false;
   void openDrawer() {
     _scaffoldKey.currentState?.openDrawer();
@@ -46,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     callApi();
     callCourseApi();
+    getProfileApi();
   }
 
   Future<void> callApi() async {
@@ -66,37 +70,39 @@ class _HomeScreenState extends State<HomeScreen> {
         "status" :"0",
       });
     }
-    GetAllCourseCategory? _getAllCourseCategory= await ApiService().getAllCourses(context,data: data());
+    GetAllMainCourse? _getAllCourseCategory= await ApiService().getAllMainCourses(context,data: data());
 
     if(_getAllCourseCategory != null){
 
       getAllCourses = _getAllCourseCategory.course!
-          .map((e) => Course.fromJson(e.toJson()))
+          .map((e) => MainCourse.fromJson(e.toJson()))
           .toList();
       allCourseListRes = _getAllCourseCategory.course!
-          .map((e) => Course.fromJson(e.toJson()))
+          .map((e) => MainCourse.fromJson(e.toJson()))
           .toList();
       setState(() {});
     }
   }
+  Future<void> getProfileApi() async {
+    String? id = await Preferances.getString("userId");
 
-  Future<void> _onSearchHandler(String qurey) async {
-    if (qurey.isNotEmpty) {
-      _isSearching = true;
-      getAllCourses = _isSearching ? searchCourse(qurey) : getAllCourses;
-    } else {
-      getAllCourses.clear();
-      getAllCourses = allCourseListRes;
-      _isSearching = false;
+    FormData data() {
+      return FormData.fromMap({
+        "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
+      });
     }
-    setState(() {});
+    print("login id $id");
+    ApiService().myProfile(context,data: data()).then((value){
+      setState(() {
+        myProfileData=value.course!;
+        Preferances.setString("phone", value.course.branchPhone);
+      });
+    });
+
   }
 
-  List<Course> searchCourse(String qurey) {
-    return allCourseListRes
-        .where((e) => e.ccfvName!.toLowerCase().contains(qurey.toLowerCase()))
-        .toList();
-  }
+
+
 
   String? paymentId;
 
@@ -131,97 +137,100 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           child: const DrawerWidget(),
         ),
-        body: CustomScroll(
-          children: [
-            SizedBoxH18(),
-            SizedBox(
-              width: double.infinity,
-              child: CarouselSlider.builder(
-                  carouselController: buttonCarouselController,
-                  itemCount: sliderImageList.length ?? 0,
-                  itemBuilder: (BuildContext context, int itemIndex,
-                      int pageViewIndex) =>
-                      Padding(
-                          padding: const EdgeInsets.only(right: 3, left: 3),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                      'https://vedioclasses.provisioningtech.com/uploads/${sliderImageList[itemIndex].bannerImage}',
-                                    ),
-                                    fit: BoxFit.cover)),
-                          )),
-                  options: CarouselOptions(
-                    onPageChanged: (index, _) {
-                      setState(() {
-                        _selectedSliderIndex = index;
-                      });
-                    },
-                    aspectRatio: 15 / 8,
-                    viewportFraction: 1,
-                    initialPage: 0,
-                    autoPlay: false,
-                    enableInfiniteScroll: false,
-                    autoPlayInterval: const Duration(seconds: 3),
-                    autoPlayAnimationDuration:
-                    const Duration(milliseconds: 800),
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    enlargeCenterPage: true,
-                    scrollDirection: Axis.horizontal,
-                  )),
-            ),
-            SizedBoxH18(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+        body: SafeArea(
+          child: PrimaryPadding(
+            child:Column(
               children: [
-                ...List.generate(
-                  sliderImageList.length,
-                      (index) => Indicator(
-                      isActive: _selectedSliderIndex == index ? true : false),
-                )
-              ],
-            ),
-            SizedBoxH10(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Recommended Courses ",style: AppTextStyle.alertSubtitle),
-                TextButton(onPressed: (){
-                  Navigator.pushNamed(context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 1));
-                }, child: Text("See All",style: AppTextStyle.subTitle.copyWith(color: AppColor.primaryColor),))
-              ],
-            ),
-            SizedBoxH10(),
-            GestureDetector(
-              onTap: (){
-              },
-              child: Container(
-                height: Sizes.s350,
-                child:SingleChildScrollView(
-                  child: ListView.builder(
-                    padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: getAllCourses.length,
-                    itemBuilder: (context, inx) {
-                      return CoursesListContainer(
-                        image:getAllCourses[inx].ccfvCourseImage ?? "",
-                        name:getAllCourses[inx].ccfvName ?? "",
-                        lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
-                        displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
-                        ccid: getAllCourses[inx].ccfvId ?? "",
-                        ccstatus: getAllCourses[inx].ccfvStatus ?? "",
-                        ccIntroVideo: getAllCourses[inx].ccfvUrl ?? "",
-                        amount: "${getAllCourses[inx].ccfvCommision ?? ""}",
-                      );
-                    },
+                SizedBoxH18(),
+                SizedBox(
+                  width: double.infinity,
+                  child: CarouselSlider.builder(
+                      carouselController: buttonCarouselController,
+                      itemCount: sliderImageList.length ?? 0,
+                      itemBuilder: (BuildContext context, int itemIndex,
+                          int pageViewIndex) =>
+                          Padding(
+                              padding: const EdgeInsets.only(right: 3, left: 3),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                          'https://vedioclasses.provisioningtech.com/uploads/${sliderImageList[itemIndex].bannerImage}',
+                                        ),
+                                        fit: BoxFit.cover)),
+                              )),
+                      options: CarouselOptions(
+                        onPageChanged: (index, _) {
+                          setState(() {
+                            _selectedSliderIndex = index;
+                          });
+                        },
+                        aspectRatio: 15 / 8,
+                        viewportFraction: 1,
+                        initialPage: 0,
+                        autoPlay: false,
+                        enableInfiniteScroll: false,
+                        autoPlayInterval: const Duration(seconds: 3),
+                        autoPlayAnimationDuration:
+                        const Duration(milliseconds: 800),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enlargeCenterPage: true,
+                        scrollDirection: Axis.horizontal,
+                      )),
+                ),
+                SizedBoxH18(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ...List.generate(
+                      sliderImageList.length,
+                          (index) => Indicator(
+                          isActive: _selectedSliderIndex == index ? true : false),
+                    )
+                  ],
+                ),
+                SizedBoxH10(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Recommended Courses ",style: AppTextStyle.alertSubtitle),
+                    TextButton(onPressed: (){
+                      Navigator.pushNamed(context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 1));
+                    }, child: Text("See All",style: AppTextStyle.subTitle.copyWith(color: AppColor.drawerBackground),))
+                  ],
+                ),
+                SizedBoxH10(),
+                Expanded(
+                  child: SizedBox(
+                    height: Sizes.s350,
+                    child:SingleChildScrollView(
+                      child: ListView.builder(
+                        padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: getAllCourses.length,
+                        itemBuilder: (context, inx) {
+                          return CoursesListContainer(
+                            image:getAllCourses[inx].cMCIMAGE ?? "",
+                            name:getAllCourses[inx].cMCNAME ?? "",
+                            lessons: "${getAllCourses[inx].cMCCHAPTERS ?? ""} ",
+                            displayAmount: "₹${getAllCourses[inx].cMCCOMMISION ?? ""}",
+                            ccid: getAllCourses[inx].cMCID ?? "",
+                            ccstatus: getAllCourses[inx].cMCSTATUS ?? "",
+                            ccIntroVideo: getAllCourses[inx].cMCINTROURL ?? "",
+                            ccDescription: getAllCourses[inx].cMCDESC ?? "",
+                            amount: "${getAllCourses[inx].cMCCOMMISION ?? ""}",
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            //Container
-          ],
+                //Container
+              ],
+            )
+          ),
         ),
         appBar: SecondaryAppBar(
             title: "Home",
@@ -245,6 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
         required String ccstatus,
         required String displayAmount,
         required String ccIntroVideo,
+        required String ccDescription,
       }
       ){
     return Column(
@@ -326,7 +336,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ccId: ccid,
                                 ccUrl: ccIntroVideo,
                                 ccCourseName: name,
-                                // ccDesc: ccDescription,
+                                ccDesc: ccDescription,
                                 ccAmount: amount,
                                 ccLessons: lessons,
                               )

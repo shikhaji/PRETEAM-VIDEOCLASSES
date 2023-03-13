@@ -28,6 +28,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(const MyApp());
   //disableCapture();
 }
@@ -80,6 +81,8 @@ class _ScrollBehaviorModified extends ScrollBehavior {
     }
   }
 }
+
+
 disableCapture() async{
   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
 }

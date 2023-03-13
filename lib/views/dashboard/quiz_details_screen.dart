@@ -25,8 +25,17 @@ class QuizDetailsScreen extends StatefulWidget {
 
 }
 
+
 class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
   List<CONTEST> getAllQuizDetails = [];
+  @override
+  void initState() {
+
+    super.initState();
+    print("CourseId : ${widget.arguments?.ccId}");
+    QuizDetail();
+
+  }
   Future<void> QuizDetail() async {
 
     FormData data() {

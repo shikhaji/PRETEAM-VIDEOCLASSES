@@ -36,8 +36,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       initialVideoId: videoID!,
       flags: YoutubePlayerFlags(
         autoPlay: false,
-        forceHD: true,
-        hideThumbnail: true,
       ),
     );
     super.initState();
@@ -94,7 +92,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
     );
   }
-
 
 }
 

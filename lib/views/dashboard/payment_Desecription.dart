@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../model/my_order_list_model.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
 import '../../services/shared_preferences.dart';
 import '../../utils/app_color.dart';
+import '../../utils/app_sizes.dart';
 import '../../utils/app_text_style.dart';
 import '../../widgets/app_text.dart';
 import '../../widgets/custom_size_box.dart';
@@ -28,7 +30,9 @@ class _PaymentDesState extends State<PaymentDes> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     callApi();
+
   }
 
   String loginId ="";
@@ -47,10 +51,14 @@ class _PaymentDesState extends State<PaymentDes> {
    ApiService().getOrderListAPi(context,data:data).then((value) {
      if(value != null){
        setState(() {
+
           getOrderListModel = GetOrderListModel.fromJson(jsonDecode(value));
+
+
+
        });
        print("getOrderList:=${getOrderListModel!.course!.length}");
-       print("getOrderList:=${getOrderListModel!.course![0].cCFVNAME}");
+       print("getOrderList:=${getOrderListModel!.course![0].cMCNAME}");
      }
    });
   }
@@ -78,7 +86,7 @@ class _PaymentDesState extends State<PaymentDes> {
                 rows: [
                   DataRow(cells: [
                     DataCell(Text("Name:")),
-                    DataCell(Text("${getOrderListModel != null && getOrderListModel!.course != null ? getOrderListModel!.course![0].cCFVNAME : ""}")),
+                    DataCell(Text("${getOrderListModel != null && getOrderListModel!.course != null ? getOrderListModel!.course![0].cMCNAME : ""}")),
 
                   ]),
                   DataRow(cells: [
@@ -88,7 +96,7 @@ class _PaymentDesState extends State<PaymentDes> {
                   ]),
                   DataRow(cells: [
                     DataCell(Text('Amount:')),
-                    DataCell(Text('${getOrderListModel != null && getOrderListModel!.course != null ? getOrderListModel!.course![0].cCFVCOMMISION : ""}')),
+                    DataCell(Text('${getOrderListModel != null && getOrderListModel!.course != null ? getOrderListModel!.course![0].cMCCOMMISION: ""}')),
 
                   ]),
                   DataRow(cells: [

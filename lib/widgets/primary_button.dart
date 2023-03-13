@@ -10,7 +10,6 @@ class PrimaryButton extends StatelessWidget {
   final String lable;
   final VoidCallback onPressed;
   final double? height;
-  final double? minWidth;
   final Color? color;
   final bool? isStyle;
   const PrimaryButton(
@@ -19,14 +18,14 @@ class PrimaryButton extends StatelessWidget {
         this.color,
         this.isStyle = false,
         required this.onPressed,
-        this.height, this.minWidth})
+        this.height})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
         height: height ?? ScreenUtil().setHeight(50),
-        minWidth: minWidth ?? double.infinity,
+        minWidth: double.infinity,
         shape: const StadiumBorder(),
         color: color ?? AppColor.primaryColor,
         highlightColor: Colors.transparent,

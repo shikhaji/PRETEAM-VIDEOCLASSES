@@ -25,7 +25,7 @@ class CourseDetailsScreen extends StatefulWidget {
 }
 
 class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
-  List<Course> getAllCourseDetails = [];
+  List<Course> getAllCourseDetails=[];
 
   @override
   void initState() {
@@ -35,22 +35,26 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     callApi();
   }
 
+
   Future<void> callApi() async {
+
     FormData data() {
       return FormData.fromMap({
         "cc_id": widget.arguments?.ccId,
       });
     }
+    ApiService().categoryById(context,data: data()).then((value){
 
-    ApiService().categoryById(context, data: data()).then((value) {
       setState(() {
-        getAllCourseDetails = value.course!;
+        getAllCourseDetails=value.course!;
       });
     });
+
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         body: SafeArea(
           child: PrimaryPadding(
@@ -66,7 +70,6 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                     ),
                   ),
                   height: Sizes.s200.h,
-
                 ),
                 SizedBoxH34(),
                 Row(
@@ -77,14 +80,10 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                       decoration: BoxDecoration(
                           color: AppColor.primaryColor
                       ),
-                      child: TextButton(onPressed: (){
-
-                        Navigator.pushNamed(context, Routs.paymentDes,arguments: OtpArguments(ccId:"${widget.arguments!.ccId}"));
-
-                      }, child: appText("Purchased Receipt",style: AppTextStyle.alertSubtitle1.copyWith(color: AppColor.white))),
                     )
                   ],
                 ),
+
                 SizedBoxH20(),
                 Expanded(
                   child: SizedBox(
@@ -123,6 +122,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
           leadingIcon: Icons.arrow_back,
         )
     );
+
   }
 
   Widget CoursesListContainer({
@@ -132,7 +132,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     required String chapterPdf,
     required String desc,
     required String img,
-  }) {
+  }){
     return Column(
       children: [
         Container(
@@ -222,5 +222,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
         SizedBoxH10(),
       ],
     );
+
+
   }
 }
+

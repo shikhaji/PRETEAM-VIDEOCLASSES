@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:pr_team/views/auth/mobile_verification_screen.dart';
-import 'package:pr_team/views/auth/otp_verification_screen.dart';
 import 'package:sizer/sizer.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_text_style.dart';
 import '../../widgets/app_text.dart';
 import '../../widgets/custom_size_box.dart';
 import '../../widgets/primary_button.dart';
-import '../auth/login_screen.dart';
-import '../auth/signUp.dart';
+import '../Auth/login_screen.dart';
+import '../auth/mobile_verification_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -35,8 +33,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   height: 20.h,
                 ),
                 SizedBoxH30(),
-                appText("Welcome to ",style:AppTextStyle.title ),
-                appText("PR Team",style:AppTextStyle.title ),
+                appText("Welcome to PR Team ",style:AppTextStyle.title ),
                 SizedBoxH34(),
                 appText("Already have an account ?",style:AppTextStyle.lable ),
                 SizedBoxH14(),
