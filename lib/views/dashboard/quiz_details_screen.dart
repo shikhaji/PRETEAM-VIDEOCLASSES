@@ -41,7 +41,7 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
 
     FormData data() {
       return FormData.fromMap({
-        "courseid":1,
+        "courseid":"${widget.arguments?.ccId}",
       });
     }
     ApiService().getQuizDetails(context,data: data()).then((value){

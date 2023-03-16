@@ -121,7 +121,7 @@ class RoutGenerator {
 
       case Routs.quizDetails:
         return MaterialPageRoute(
-            builder: (_) => QuizDetailsScreen());
+            builder: (_) => QuizDetailsScreen(arguments: arguments as OtpArguments,));
 
       case Routs.questionScreen:
         return MaterialPageRoute(
