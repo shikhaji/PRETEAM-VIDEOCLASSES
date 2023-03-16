@@ -33,6 +33,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     super.initState();
 
     callApi();
+    print("ccid: ${widget.arguments?.ccId}");
   }
 
 
@@ -102,6 +103,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                             chapterPdf: getAllCourseDetails[inx].cVLCOURSEPDF  ?? "",
                             desc: getAllCourseDetails[inx].cVLDESC  ?? "",
                             img: getAllCourseDetails[inx].cCFVCOURSEIMAGE  ?? "",
+                            ccid: getAllCourseDetails[inx].cCFVID  ?? "",
 
                           );
                         },
@@ -132,6 +134,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     required String chapterPdf,
     required String desc,
     required String img,
+    required String ccid,
   }){
     return Column(
       children: [
@@ -201,7 +204,9 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                                   ccCourseName: chapterName,
                                   ccChapterPdf: chapterPdf,
                                   ccDesc: desc,
-                                  ccImg: img
+                                  ccImg: img,
+                                ccId: ccid,
+
                               ));
                           //  clearField();
 

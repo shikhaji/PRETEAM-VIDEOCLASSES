@@ -16,6 +16,7 @@ import '../model/login_model.dart';
 import '../model/mobile_verify_model.dart';
 import '../model/my_order_list_model.dart';
 import '../model/my_profile_model.dart';
+import '../model/quiz_detail_model.dart';
 import '../model/slider_model.dart';
 import '../model/verify_center_code_model.dart';
 import '../routes/app_routes.dart';
@@ -332,12 +333,7 @@ class ApiService {
     try {
       Loader.showLoader();
       Response response;
-      response = await dio.post(EndPoints.getAllCourseCategoryId,
-          // options: Options(headers: {
-          //   "Client-Service": "frontend-client",
-          //   "Auth-Key": 'simplerestapi',
-          // }),
-          data: data);
+      response = await dio.post(EndPoints.getAllCourseCategoryId,data: data);
 
       if (response.statusCode == 200) {
         GetAllCourseCategoryId responseData = GetAllCourseCategoryId.fromJson(response.data);
@@ -537,31 +533,31 @@ class ApiService {
     }
   }
 
-  //----------------------------Payment DES API-----------------------//
+//-----------------------GET QUIZ DETAILS API-----------------------//
 
-  // Future<MyOderListModel> paymentDes (BuildContext context,{
-  //   FormData? data,
-  // }) async {
-  //   try {
-  //     Loader.showLoader();
-  //     Response response;
-  //     response = await dio.post(EndPoints.getMyOrderList,
-  //     );
-  //     if (response.statusCode == 200) {
-  //       MyOderListModel responseData = MyOderListModel.fromJson(response.data);
-  //       Loader.hideLoader();
-  //       debugPrint('responseData ----- > ${response.data}');
-  //       return responseData;
-  //     } else {
-  //       Loader.hideLoader();
-  //       throw Exception(response.data);
-  //     }
-  //   } on DioError catch (e) {
-  //     Loader.hideLoader();
-  //     debugPrint('Dio E  $e');
-  //     throw e.error;
-  //   }
-  // }
+  Future<QuizDetails> getQuizDetails(BuildContext context,{
+    FormData? data,
+  }) async {
+    try {
+      Loader.showLoader();
+      Response response;
+      response = await dio.post(EndPoints.getQuizDetails,data: data);
+
+      if (response.statusCode == 200) {
+        QuizDetails responseData = QuizDetails.fromJson(response.data);
+        Loader.hideLoader();
+        debugPrint('GetQuizDetails responseData ----- > ${response.data}');
+        return responseData;
+      } else {
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      Loader.hideLoader();
+      debugPrint('Dio E  $e');
+      throw e.error;
+    }
+  }
 
 
 

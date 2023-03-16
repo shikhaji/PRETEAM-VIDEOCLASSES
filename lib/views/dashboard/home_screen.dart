@@ -139,107 +139,107 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: SafeArea(
           child: PrimaryPadding(
-            child:Column(
-              children: [
-                SizedBoxH18(),
-                SizedBox(
-                  width: double.infinity,
-                  child: CarouselSlider.builder(
-                      carouselController: buttonCarouselController,
-                      itemCount: sliderImageList.length ?? 0,
-                      itemBuilder: (BuildContext context, int itemIndex,
-                          int pageViewIndex) =>
-                          Padding(
-                              padding: const EdgeInsets.only(right: 3, left: 3),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                          'https://vedioclasses.provisioningtech.com/uploads/${sliderImageList[itemIndex].bannerImage}',
-                                        ),
-                                        fit: BoxFit.cover)),
-                              )),
-                      options: CarouselOptions(
-                        onPageChanged: (index, _) {
-                          setState(() {
-                            _selectedSliderIndex = index;
-                          });
-                        },
-                        aspectRatio: 15 / 8,
-                        viewportFraction: 1,
-                        initialPage: 0,
-                        autoPlay: false,
-                        enableInfiniteScroll: false,
-                        autoPlayInterval: const Duration(seconds: 3),
-                        autoPlayAnimationDuration:
-                        const Duration(milliseconds: 800),
-                        autoPlayCurve: Curves.fastOutSlowIn,
-                        enlargeCenterPage: true,
-                        scrollDirection: Axis.horizontal,
-                      )),
-                ),
-                SizedBoxH18(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ...List.generate(
-                      sliderImageList.length,
-                          (index) => Indicator(
-                          isActive: _selectedSliderIndex == index ? true : false),
-                    )
-                  ],
-                ),
-                SizedBoxH10(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Recommended Courses ",style: AppTextStyle.alertSubtitle),
-                    TextButton(onPressed: (){
-                      Navigator.pushNamed(context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 1));
-                    }, child: Text("See All",style: AppTextStyle.subTitle.copyWith(color: AppColor.drawerBackground),))
-                  ],
-                ),
-                SizedBoxH10(),
-                Expanded(
-                  child: SizedBox(
-                    height: Sizes.s350,
-                    child:SingleChildScrollView(
-                      child: ListView.builder(
-                        padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: getAllCourses.length,
-                        itemBuilder: (context, inx) {
-                          return CoursesListContainer(
-                            image:getAllCourses[inx].cMCIMAGE ?? "",
-                            name:getAllCourses[inx].cMCNAME ?? "",
-                            lessons: "${getAllCourses[inx].cMCCHAPTERS ?? ""} ",
-                            displayAmount: "₹${getAllCourses[inx].cMCCOMMISION ?? ""}",
-                            ccid: getAllCourses[inx].cMCID ?? "",
-                            ccstatus: getAllCourses[inx].cMCSTATUS ?? "",
-                            ccIntroVideo: getAllCourses[inx].cMCINTROURL ?? "",
-                            ccDescription: getAllCourses[inx].cMCDESC ?? "",
-                            amount: "${getAllCourses[inx].cMCCOMMISION ?? ""}",
-                          );
-                        },
+              child:Column(
+                children: [
+                  SizedBoxH18(),
+                  SizedBox(
+                    width: double.infinity,
+                    child: CarouselSlider.builder(
+                        carouselController: buttonCarouselController,
+                        itemCount: sliderImageList.length ?? 0,
+                        itemBuilder: (BuildContext context, int itemIndex,
+                            int pageViewIndex) =>
+                            Padding(
+                                padding: const EdgeInsets.only(right: 3, left: 3),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                            'https://vedioclasses.provisioningtech.com/uploads/${sliderImageList[itemIndex].bannerImage}',
+                                          ),
+                                          fit: BoxFit.cover)),
+                                )),
+                        options: CarouselOptions(
+                          onPageChanged: (index, _) {
+                            setState(() {
+                              _selectedSliderIndex = index;
+                            });
+                          },
+                          aspectRatio: 15 / 8,
+                          viewportFraction: 1,
+                          initialPage: 0,
+                          autoPlay: false,
+                          enableInfiniteScroll: false,
+                          autoPlayInterval: const Duration(seconds: 3),
+                          autoPlayAnimationDuration:
+                          const Duration(milliseconds: 800),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          enlargeCenterPage: true,
+                          scrollDirection: Axis.horizontal,
+                        )),
+                  ),
+                  SizedBoxH18(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ...List.generate(
+                        sliderImageList.length,
+                            (index) => Indicator(
+                            isActive: _selectedSliderIndex == index ? true : false),
+                      )
+                    ],
+                  ),
+                  SizedBoxH10(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Recommended Courses ",style: AppTextStyle.alertSubtitle),
+                      TextButton(onPressed: (){
+                        Navigator.pushNamed(context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 1));
+                      }, child: Text("See All",style: AppTextStyle.subTitle.copyWith(color: AppColor.drawerBackground),))
+                    ],
+                  ),
+                  SizedBoxH10(),
+                  Expanded(
+                    child: SizedBox(
+                      height: Sizes.s350,
+                      child:SingleChildScrollView(
+                        child: ListView.builder(
+                          padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: getAllCourses.length,
+                          itemBuilder: (context, inx) {
+                            return CoursesListContainer(
+                              image:getAllCourses[inx].cMCIMAGE ?? "",
+                              name:getAllCourses[inx].cMCNAME ?? "",
+                              lessons: "${getAllCourses[inx].cMCCHAPTERS ?? ""} ",
+                              displayAmount: "₹${getAllCourses[inx].cMCCOMMISION ?? ""}",
+                              ccid: getAllCourses[inx].cMCID ?? "",
+                              ccstatus: getAllCourses[inx].cMCSTATUS ?? "",
+                              ccIntroVideo: getAllCourses[inx].cMCINTROURL ?? "",
+                              ccDescription: getAllCourses[inx].cMCDESC ?? "",
+                              amount: "${getAllCourses[inx].cMCCOMMISION ?? ""}",
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
-                ),
-                //Container
-              ],
-            )
+                  //Container
+                ],
+              )
           ),
         ),
         appBar: SecondaryAppBar(
-            title: "Home",
-            isLeading: true,
-            leadingIcon: Icons.menu,
-            onBackPressed: () {
-              openDrawer();
-            },
-            )
+          title: "Home",
+          isLeading: true,
+          leadingIcon: Icons.menu,
+          onBackPressed: () {
+            openDrawer();
+          },
+        )
     );
 
   }
@@ -385,4 +385,3 @@ class Indicator extends StatelessWidget {
     );
   }
 }
-

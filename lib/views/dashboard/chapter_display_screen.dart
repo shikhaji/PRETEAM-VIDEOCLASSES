@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pr_team/widgets/primary_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../model/course_categoryid_model.dart';
@@ -32,6 +33,7 @@ class ChapterDisplayScreen extends StatefulWidget {
 
 class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
   List<Course> getAllCourseDetails = [];
+  late  String ccid ="";
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   CarouselController buttonCarouselController = CarouselController();
@@ -65,7 +67,8 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
     ]);
 
     callApi();
-
+    print("ccid: ${widget.arguments?.ccId}");
+    ccid = "${widget.arguments?.ccId}";
   }
 
   Future<void> callApi() async {
@@ -79,6 +82,7 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
 
       setState(() {
         getAllCourseDetails=value.course!;
+        ccid = '${widget.arguments?.ccId}';
       });
     });
 
@@ -123,6 +127,7 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
                 onTap: (){
                   Navigator.pushNamed(context, Routs.videoPlayer,arguments: OtpArguments(
                     ccUrl: videoURL,
+
                     // ccChapterName: name,
                     // ccCourseName: chapterName,
                     // ccChapterPdf: chapterPdf,
@@ -137,11 +142,11 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
 
 
           SizedBoxH10(),
-
-
-
-
-          SizedBoxH34(),
+          PrimaryButton(lable: 'Take Quiz', onPressed: (){
+            Navigator.pushNamed(context, Routs.quizDetails,arguments: OtpArguments(
+              ccId: ccid,
+            ));
+          },color: AppColor.grey),
           SizedBoxH34(),
           Align(
               alignment: Alignment.topLeft,

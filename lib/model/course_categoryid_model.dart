@@ -44,6 +44,8 @@ class Course {
   String? cCFVCOURSEIMAGE;
   String? cCFVTOTALLESSONS;
   String? cCFVURL;
+  String? cCFVDESC;
+  String? cCFVCMCID;
 
   Course(
       {this.cVLTT,
@@ -61,7 +63,9 @@ class Course {
         this.cCFVCOMMISION,
         this.cCFVCOURSEIMAGE,
         this.cCFVTOTALLESSONS,
-        this.cCFVURL});
+        this.cCFVURL,
+        this.cCFVDESC,
+        this.cCFVCMCID});
 
   Course.fromJson(Map<String, dynamic> json) {
     cVLTT = json['CVL_TT'];
@@ -80,6 +84,8 @@ class Course {
     cCFVCOURSEIMAGE = json['CCFV_COURSE_IMAGE'];
     cCFVTOTALLESSONS = json['CCFV_TOTAL_LESSONS'];
     cCFVURL = json['CCFV_URL'];
+    cCFVDESC = json['CCFV_DESC'];
+    cCFVCMCID = json['CCFV_CMC_ID'];
   }
 
   Map<String, dynamic> toJson() {
@@ -100,6 +106,8 @@ class Course {
     data['CCFV_COURSE_IMAGE'] = this.cCFVCOURSEIMAGE;
     data['CCFV_TOTAL_LESSONS'] = this.cCFVTOTALLESSONS;
     data['CCFV_URL'] = this.cCFVURL;
+    data['CCFV_DESC'] = this.cCFVDESC;
+    data['CCFV_CMC_ID'] = this.cCFVCMCID;
     return data;
   }
 }
