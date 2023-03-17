@@ -214,10 +214,7 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    // appText("Rule:1",
-                                    //     style: AppTextStyle.alertSubtitleRed
-                                    //         .copyWith(fontSize: Sizes.s16.h)),
-                                    // SizedBoxH6(),
+
                                     appText("Subject Name : $contestSubjectName",
                                         style: AppTextStyle.body1
                                             .copyWith(fontSize: Sizes.s16.h)),
@@ -233,12 +230,6 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
                                     appText("Total Quiz Time : $contestTotalTime minutes",
                                         style: AppTextStyle.body1
                                             .copyWith(fontSize: Sizes.s16.h)),
-                                    SizedBoxH8(),
-                                    appText("Per Question Timing : $contestPerQuestionTiming Seconds",
-                                        style: AppTextStyle.body1
-                                            .copyWith(fontSize: Sizes.s16.h)),
-
-
                                   ],
                                 ),
 

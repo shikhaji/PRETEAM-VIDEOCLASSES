@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
       allCourseListRes = _getAllCourseCategory.course!
           .map((e) => MainCourse.fromJson(e.toJson()))
           .toList();
-      setState(() {});
+
     }
   }
   Future<void> getProfileApi() async {
@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
     print("login id $id");
     ApiService().myProfile(context,data: data()).then((value){
       setState(() {
-        myProfileData=value.course!;
+        myProfileData=value.course;
         Preferances.setString("phone", value.course.branchPhone);
       });
     });

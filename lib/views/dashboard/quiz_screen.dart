@@ -11,6 +11,7 @@ import 'package:pr_team/views/dashboard/result_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../const/colors.dart';
 import '../../const/text_style.dart';
+import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../utils/function.dart';
 import '../../widgets/app_text.dart';
@@ -58,7 +59,6 @@ class _QuizScreenState extends State<QuizScreen> {
                 actions: <Widget>[
                   GestureDetector(
                     onTap: (){
-
                       quizResult(context);
                     },
                     child: Container(

@@ -17,6 +17,7 @@ import '../model/mobile_verify_model.dart';
 import '../model/my_order_list_model.dart';
 import '../model/my_profile_model.dart';
 import '../model/quiz_detail_model.dart';
+import '../model/quiz_question_model.dart';
 import '../model/slider_model.dart';
 import '../model/verify_center_code_model.dart';
 import '../routes/app_routes.dart';
@@ -560,5 +561,32 @@ class ApiService {
   }
 
 
+  //-----------------------GET QUIZ QUESTION DETAILS API-----------------------//
 
- }
+  Future<quizQuestionModel> getQuizQuestion(BuildContext context,{
+    FormData? data,
+  }) async {
+    try {
+      Loader.showLoader();
+      Response response;
+      response = await dio.post(EndPoints.getQuizQuestion,data: data);
+
+      if (response.statusCode == 200) {
+        quizQuestionModel responseData = quizQuestionModel.fromJson(response.data);
+        Loader.hideLoader();
+        debugPrint('GetQuizQuestion responseData ----- > ${response.data}');
+        return responseData;
+      } else {
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      Loader.hideLoader();
+      debugPrint('Dio E  $e');
+      throw e.error;
+    }
+  }
+
+
+
+}
