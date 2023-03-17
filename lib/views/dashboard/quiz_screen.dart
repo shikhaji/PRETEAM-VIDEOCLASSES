@@ -2,227 +2,529 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pr_team/utils/app_assets.dart';
 import 'package:pr_team/utils/app_color.dart';
+import 'package:pr_team/utils/app_sizes.dart';
+import 'package:pr_team/utils/app_text_style.dart';
+import 'package:pr_team/views/dashboard/result_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../const/colors.dart';
 import '../../const/text_style.dart';
+import '../../routes/arguments.dart';
+import '../../utils/function.dart';
+import '../../widgets/app_text.dart';
+import '../Auth/login_screen.dart';
 import 'api_services.dart';
 
 class QuizScreen extends StatefulWidget {
-  const QuizScreen({Key? key}) : super(key: key);
+  final OtpArguments? arguments;
+  const QuizScreen({Key? key, this.arguments}) : super(key: key);
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-  var currentQuestionIndex = 0;
-  int seconds = 61;
+  int seconds = 20;
   Timer? timer;
-  late Future quiz;
-
-  int points = 0;
-
-  var isLoaded = false;
-
-  var optionsList = [];
-
-  var optionsColor = [
-    Colors.white,
-    Colors.white,
-    Colors.white,
-    Colors.white,
-    Colors.white,
-  ];
-
-  @override
   void initState() {
-    super.initState();
-    quiz = getQuiz();
-    startTimer();
-  }
 
+    super.initState();
+
+    startTimer();
+    print("ccid : ${widget.arguments?.ccId}");
+  }
   @override
   void dispose() {
     timer!.cancel();
     super.dispose();
   }
 
-  resetColors() {
-    optionsColor = [
-      Colors.white,
-      Colors.white,
-      Colors.white,
-      Colors.white,
-      Colors.white,
-    ];
-  }
 
   startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         if (seconds > 0) {
           seconds--;
-        } else {
-          gotoNextQuestion();
+        }
+        else{
+          if(seconds == 0) {
+            showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                title: const Text("Times Up !"),
+                content: const Text("Thank you for giving quiz "),
+                actions: <Widget>[
+                  GestureDetector(
+                    onTap: (){
+
+                      quizResult(context);
+                    },
+                    child: Container(
+                      color: Colors.green,
+                      padding: const EdgeInsets.all(14),
+                      child: const Text("SUBMIT"),
+                    ),
+                  ),
+                ],
+              ),
+            );
+            //CommonFunctions.toast('Times Up');
+            //quizResult(context);
+
+          }
         }
       });
     });
   }
+  List quizListData = [
+    {
+      "id": 1,
+      "answer": "30%",
+      "answer_discription": "",
+      "is_answered": 0,
+      "is_answer_status_right_wrong_omitted": 0,
+      "title":
+      "A mine or part there of may be treated as naturally wet if the roadway dust sample \r\ncontain_______or more of moisture by weight.",
+      "options": [
+        {
+          "option": "a",
+          "value": "10%",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "b",
+          "value": "15%",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "c",
+          "value": "20%",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "d",
+          "value": "30%",
+          "color": "0xFFFFFFFF",
+        },
+      ],
+    },
+    {
+      "id": 2,
+      "answer": "25 cm",
+      "answer_discription": "",
+      "is_answered": 0,
+      "is_answer_status_right_wrong_omitted": 0,
+      "title":
+      "The thickness of ventilation stopping constructed of masonary or brickwork shall be _______cms \r\nin thickness",
+      "options": [
+        {
+          "option": "a",
+          "value": "20 cm",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "b",
+          "value": "15 cm",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "c",
+          "value": "25 cm",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "d",
+          "value": "10 cm",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "e",
+          "value": "18 cm",
+          "color": "0xFFFFFFFF",
+        }
+      ],
+    },
+    {
+      "id": 3,
+      "answer": "Mine Managers",
+      "answer_discription": "",
+      "is_answered": 0,
+      "is_answer_status_right_wrong_omitted": 0,
+      "title": "M.V.T. Rules 1966 shall not apply to the following persons",
+      "options": [
+        {
+          "option": "a",
+          "value": "Timber man",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "b",
+          "value": "Coal driller",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "c",
+          "value": "Coal driller",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "d",
+          "value": "Mine Managers",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "e",
+          "value": "Haulage attendents",
+          "color": "0xFFFFFFFF",
+        }
+      ],
+    },
+    {
+      "id": 4,
+      "answer": "3",
+      "answer_discription": "",
+      "is_answered": 0,
+      "is_answer_status_right_wrong_omitted": 0,
+      "title": "Mine Managers",
+      "options": [
+        {
+          "option": "a",
+          "value": "3",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "b",
+          "value": "2",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "c",
+          "value": "1",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "e",
+          "value": "Not required",
+          "color": "0xFFFFFFFF",
+        }
+      ],
+    },
+    {
+      "id": 5,
+      "answer": "1 year",
+      "answer_discription": "",
+      "is_answered": 0,
+      "is_answer_status_right_wrong_omitted": 0,
+      "title":
+      "As per M.V.T. Rules 1966 every person holding a gast testing certificate shall once in __________ \r\nundergo a course of training as detailed in 8th schedule of M V T Rules 1966.",
+      "options": [
+        {
+          "option": "a",
+          "value": "5 years",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "b",
+          "value": "1 year",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "c",
+          "value": "2 years",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "d",
+          "value": "3years",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "e",
+          "value": "4years",
+          "color": "0xFFFFFFFF",
+        }
+      ],
+    },
+    {
+      "id": 6,
+      "answer": "8m",
+      "answer_discription": "",
+      "is_answered": 0,
+      "is_answer_status_right_wrong_omitted": 0,
+      "title":
+      "Main Mechanical Ventilator of a mine shall be installed on the surface at a distance of not less \r\nthan _____ from the opening of the shaft or inlcine",
+      "options": [
+        {
+          "option": "a",
+          "value": "10m",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "b",
+          "value": "8m",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "c",
+          "value": "7m",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "d",
+          "value": "5m",
+          "color": "0xFFFFFFFF",
+        },
+        {
+          "option": "e",
+          "value": "4m",
+          "color": "0xFFFFFFFF",
+        }
+      ],
+    },
+  ];
 
-  gotoNextQuestion() {
-    isLoaded = false;
-    currentQuestionIndex++;
-    resetColors();
-    timer!.cancel();
-    seconds = 61;
-    startTimer();
+  final _pageController = PageController(initialPage: 0);
+  int questionINdex = 0;
+
+  int userPercentage = 0;
+  int wrongQ = 0;
+  int ommitedQuestion = 0;
+  int totalRight = 0;
+
+  quizResult(context) {
+    userPercentage = 0;
+    wrongQ = 0;
+    ommitedQuestion = 0;
+    totalRight = 0;
+
+    for (int i = 0; i < quizListData.length; i++) {
+      if (quizListData[i]['is_answer_status_right_wrong_omitted'] == 0) {
+        ommitedQuestion++;
+      }
+      if (quizListData[i]['is_answer_status_right_wrong_omitted'] == 1) {
+        totalRight++;
+      }
+      if (quizListData[i]['is_answer_status_right_wrong_omitted'] == 2) {
+        wrongQ++;
+      }
+    }
+
+    userPercentage = ((totalRight / quizListData.length) * 100).round();
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => ResultScreen(
+            userPercentage: userPercentage,
+            totalRight: totalRight,
+            wrongQ: wrongQ,
+            ommitedQuestion: ommitedQuestion,
+          ),
+        ),
+            (Route<dynamic> route) => false);
   }
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SafeArea(
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            padding: const EdgeInsets.all(12),
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [ AppColor.darkBlue,AppColor.darkBlue1,],
-                )),
-            child: FutureBuilder(
-              future: quiz,
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  var data = snapshot.data["results"];
+      backgroundColor: const Color(0xFF053251),
+      appBar: AppBar(
+        title: const Text("Quiz Screen"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
 
-                  if (isLoaded == false) {
-                    optionsList = data[currentQuestionIndex]["incorrect_answers"];
-                    optionsList.add(data[currentQuestionIndex]["correct_answer"]);
-                    optionsList.shuffle();
-                    isLoaded = true;
-                  }
-
-                  return SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                border: Border.all(color: lightgrey, width: 2),
+                Text(
+                  "Question :${questionINdex + 1}/${quizListData.length}",
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    normalText(color: Colors.white, size: 24, text: "$seconds"),
+                    SizedBox(
+                      width: 80,
+                      height: 80,
+                      child: CircularProgressIndicator(
+                        value: seconds / 60,
+                        valueColor: const AlwaysStoppedAnimation(Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Expanded(
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: quizListData.length,
+                onPageChanged: (page) {
+                  print("Current page $page");
+                  setState(
+                        () {
+                      questionINdex = page;
+                    },
+                  );
+                },
+                itemBuilder: (context, index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFFAB40),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            quizListData[index]['title'],
+                            style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      quizListData[index]
+                      ['is_answer_status_right_wrong_omitted'] ==
+                          2
+                          ? Text(
+                        "Sorry : Right answer is -> ${quizListData[index]['answer']} ",
+                        style: const TextStyle(
+                          color: Colors.red,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                          : const SizedBox(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      ...quizListData[index]['options']
+                          .map(
+                            (data) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Card(
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
                               ),
-                              child: IconButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  icon: const Icon(
-                                    CupertinoIcons.xmark,
-                                    color: Colors.white,
-                                    size: 28,
-                                  )),
-                            ),
-                            Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                normalText(color: Colors.white, size: 24, text: "$seconds"),
-                                SizedBox(
-                                  width: 80,
-                                  height: 80,
-                                  child: CircularProgressIndicator(
-                                    value: seconds / 60,
-                                    valueColor: const AlwaysStoppedAnimation(Colors.white),
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Color(
+                                    int.parse(
+                                      data['color'],
+                                    ),
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                 ),
-                              ],
-                            ),
-                            // Container(
-                            //   decoration: BoxDecoration(
-                            //     borderRadius: BorderRadius.circular(16),
-                            //     border: Border.all(color: lightgrey, width: 2),
-                            //   ),
-                            //   child: TextButton.icon(
-                            //       onPressed: null,
-                            //       icon: const Icon(CupertinoIcons.heart_fill, color: Colors.white, size: 18),
-                            //       label: normalText(color: Colors.white, size: 14, text: "Like")),
-                            // ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Image.asset(AppAsset.quizImage,height: 150,),
-                        const SizedBox(height: 20),
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: normalText(
-                                color: lightgrey,
-                                size: 18,
-                                text: "Question ${currentQuestionIndex + 1} of ${data.length}")),
-                        const SizedBox(height: 20),
-                        normalText(color: Colors.white, size: 20, text: data[currentQuestionIndex]["question"]),
-                        const SizedBox(height: 20),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: optionsList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            var answer = data[currentQuestionIndex]["correct_answer"];
-
-                            return GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  if (answer.toString() == optionsList[index].toString()) {
-                                    optionsColor[index] = Colors.green;
-                                    points = points + 10;
-                                  } else {
-                                    optionsColor[index] = Colors.red;
-                                  }
-
-                                  if (currentQuestionIndex < data.length - 1) {
-                                    Future.delayed(const Duration(seconds: 1), () {
-                                      gotoNextQuestion();
+                                onPressed: () {
+                                  if (quizListData[index]['is_answered'] ==
+                                      0) {
+                                    setState(() {
+                                      if (data['value'] ==
+                                          quizListData[index]['answer']) {
+                                        data['color'] = "0xFF31CD63";
+                                        quizListData[index][
+                                        'is_answer_status_right_wrong_omitted'] = 1;
+                                      } else {
+                                        data['color'] = "0xFFFF0000";
+                                        quizListData[index][
+                                        'is_answer_status_right_wrong_omitted'] = 2;
+                                      }
+                                      quizListData[index]['is_answered'] =
+                                      1;
                                     });
-                                  } else {
-                                    timer!.cancel();
-                                    //here you can do whatever you want with the results
-                                  }
-                                });
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.only(bottom: 20),
-                                alignment: Alignment.center,
-                                width: size.width - 100,
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: optionsColor[index],
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: headingText(
-                                  color: blue,
-                                  size: 18,
-                                  text: optionsList[index].toString(),
+                                  } else {}
+                                },
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 0),
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                          color: Color(
+                                            int.parse(
+                                              data['color'],
+                                            ),
+                                          ),
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            data['option'].toUpperCase(),
+                                            style: const TextStyle(
+                                                color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: Text(
+                                        data['value'],
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
-                            );
-                          },
+                            ),
+                          ),
                         ),
-                      ],
-                    ),
+                      )
+                          .toList(),
+                    ],
                   );
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation(Colors.white),
-                    ),
-                  );
-                }
-              },
-            ),
-          )),
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          if (questionINdex == quizListData.length - 1) {
+            print("Submit ");
+            quizResult(context);
+          } else {
+            print("ELSE PART");
+            _pageController.nextPage(
+              duration: const Duration(milliseconds: 5),
+              curve: Curves.easeIn,
+            );
+          }
+        },
+        label:
+        Text(questionINdex == quizListData.length - 1 ? "Submit" : "Next"),
+      ),
     );
   }
+
 }

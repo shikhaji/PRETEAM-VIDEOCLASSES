@@ -34,6 +34,7 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
   void initState() {
 
     super.initState();
+
     QuizDetail();
     print("ccid : ${widget.arguments?.ccId}");
   }
@@ -70,6 +71,8 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
                 contestPassingMarks : getAllQuizDetails[inx].cONTESTPASSINGMARKS ?? "",
                 contestSubjectName : getAllQuizDetails[inx].cVLNAME ?? "",
                 contestPerQuestionTiming : getAllQuizDetails[inx].cONTESTPERQUESTIONTIMING?? "",
+                contestTotalQuestions : getAllQuizDetails[inx].tOTALQUESTIONS?? "",
+                contestTotalTime : getAllQuizDetails[inx].cONTESTTOTALTIME?? "",
               );
             },
           ),
@@ -85,7 +88,9 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
         color: AppColor.primaryColor,
         child: InkWell(
           onTap: () {
-            Navigator.pushNamed(context, Routs.questionScreen);
+            Navigator.pushNamed(context, Routs.questionScreen,arguments: OtpArguments(
+              ccId: "${widget.arguments?.ccId}"
+            ));
           },
           child: const SizedBox(
             height: Sizes.s50,
@@ -110,11 +115,13 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
   required String contestPassingMarks,
   required String contestSubjectName,
   required String contestPerQuestionTiming,
+  required String contestTotalQuestions,
+  required String contestTotalTime,
 }){
     return  Column(
       children: [
         Container(
-          height: Sizes.s200,
+          height: Sizes.s210,
           color: AppColor.primaryLightColor,
           child: Column(
             children: [
@@ -182,8 +189,13 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
             children: [
               SizedBoxH34(),
               Container(
+                height: Sizes.s2,
+                width: Sizes.s380,
+                color: AppColor.red,
+              ),
+              Container(
 
-                width: Sizes.s350,
+                width: Sizes.s380,
                 color: AppColor.sand,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -210,12 +222,20 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
                                         style: AppTextStyle.body1
                                             .copyWith(fontSize: Sizes.s16.h)),
                                     SizedBoxH8(),
+                                    appText("Total Question : $contestTotalQuestions",
+                                        style: AppTextStyle.body1
+                                            .copyWith(fontSize: Sizes.s16.h)),
+                                    SizedBoxH8(),
                                     appText("Passing Marks : $contestPassingMarks",
                                         style: AppTextStyle.body1
                                             .copyWith(fontSize: Sizes.s16.h)),
                                     SizedBoxH8(),
+                                    appText("Total Quiz Time : $contestTotalTime minutes",
+                                        style: AppTextStyle.body1
+                                            .copyWith(fontSize: Sizes.s16.h)),
+                                    SizedBoxH8(),
                                     appText("Per Question Timing : $contestPerQuestionTiming Seconds",
-                                        style: AppTextStyle.alertSubtitle
+                                        style: AppTextStyle.body1
                                             .copyWith(fontSize: Sizes.s16.h)),
 
 
@@ -233,7 +253,7 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
               ),
               Container(
                 height: Sizes.s2,
-                width: Sizes.s350,
+                width: Sizes.s380,
                 color: AppColor.red,
               ),
 
