@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pr_team/utils/app_color.dart';
+import 'package:pr_team/views/dashboard/web_screen.dart';
 import '../../model/quiz_detail_model.dart';
+import '../../model/quiz_question_model.dart';
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
@@ -88,10 +90,12 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
         color: AppColor.primaryColor,
         child: InkWell(
           onTap: () {
-            Navigator.pushNamed(context, Routs.questionScreen,arguments: OtpArguments(
-              ccId: "${widget.arguments?.ccId}"
-            ));
+            // Navigator.pushNamed(context, Routs.questionScreen,arguments: OtpArguments(
+            //   ccId: "${widget.arguments?.ccId}"
+            // ));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => WebScreen()));
           },
+
           child: const SizedBox(
             height: Sizes.s50,
             width: double.infinity,

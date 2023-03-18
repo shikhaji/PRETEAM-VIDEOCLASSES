@@ -1,22 +1,14 @@
+
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:pr_team/utils/app_assets.dart';
-import 'package:pr_team/utils/app_color.dart';
-import 'package:pr_team/utils/app_sizes.dart';
-import 'package:pr_team/utils/app_text_style.dart';
 import 'package:pr_team/views/dashboard/result_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../const/colors.dart';
 import '../../const/text_style.dart';
-import '../../routes/app_routes.dart';
+import '../../model/quiz_question_model.dart';
 import '../../routes/arguments.dart';
-import '../../utils/function.dart';
-import '../../widgets/app_text.dart';
-import '../Auth/login_screen.dart';
-import 'api_services.dart';
+import '../../services/api_services.dart';
+import 'package:dio/dio.dart';
 
 class QuizScreen extends StatefulWidget {
   final OtpArguments? arguments;
@@ -26,23 +18,46 @@ class QuizScreen extends StatefulWidget {
   State<QuizScreen> createState() => _QuizScreenState();
 }
 
+
 class _QuizScreenState extends State<QuizScreen> {
+  List<QuestionContest> getAllQuestionDetails = [];
   int seconds = 20;
+  final _pageController = PageController(initialPage: 0);
+  int questionINdex = 0;
+  int userPercentage = 0;
+  int wrongQ = 0;
+  int ommitedQuestion = 0;
+  int totalRight = 0;
   Timer? timer;
+  @override
   void initState() {
 
     super.initState();
-
     startTimer();
     print("ccid : ${widget.arguments?.ccId}");
   }
+
   @override
   void dispose() {
     timer!.cancel();
     super.dispose();
   }
+  Future<void> QuizDetail() async {
 
+    FormData data() {
+      return FormData.fromMap({
+        "courseid":"${widget.arguments?.ccId}",
+      });
+    }
+    ApiService().getQuizQuestion(context,data: data()).then((value){
 
+      setState(() {
+        getAllQuestionDetails = value.cONTEST!;
+      });
+    });
+
+  }
+  @override
   startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
@@ -50,30 +65,30 @@ class _QuizScreenState extends State<QuizScreen> {
           seconds--;
         }
         else{
-          if(seconds == 0) {
-            showDialog(
-              context: context,
-              builder: (ctx) => AlertDialog(
-                title: const Text("Times Up !"),
-                content: const Text("Thank you for giving quiz "),
-                actions: <Widget>[
-                  GestureDetector(
-                    onTap: (){
-                      quizResult(context);
-                    },
-                    child: Container(
-                      color: Colors.green,
-                      padding: const EdgeInsets.all(14),
-                      child: const Text("SUBMIT"),
-                    ),
-                  ),
-                ],
-              ),
-            );
-            //CommonFunctions.toast('Times Up');
-            //quizResult(context);
-
-          }
+          // if(seconds == 0) {
+          //   showDialog(
+          //     context: context,
+          //     builder: (ctx) => AlertDialog(
+          //       title: const Text("Times Up !"),
+          //       content: const Text("Thank you for giving quiz "),
+          //       actions: <Widget>[
+          //         GestureDetector(
+          //           onTap: (){
+          //             quizResult(context);
+          //           },
+          //           child: Container(
+          //             color: Colors.green,
+          //             padding: const EdgeInsets.all(14),
+          //             child: const Text("SUBMIT"),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   );
+          //   //CommonFunctions.toast('Times Up');
+          //   //quizResult(context);
+          //
+          // }
         }
       });
     });
@@ -285,14 +300,8 @@ class _QuizScreenState extends State<QuizScreen> {
     },
   ];
 
-  final _pageController = PageController(initialPage: 0);
-  int questionINdex = 0;
 
-  int userPercentage = 0;
-  int wrongQ = 0;
-  int ommitedQuestion = 0;
-  int totalRight = 0;
-
+  @override
   quizResult(context) {
     userPercentage = 0;
     wrongQ = 0;
@@ -323,7 +332,6 @@ class _QuizScreenState extends State<QuizScreen> {
         ),
             (Route<dynamic> route) => false);
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

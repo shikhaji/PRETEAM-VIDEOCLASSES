@@ -1,7 +1,7 @@
 class quizQuestionModel {
   int? status;
   String? message;
-  List<QuizQuestion>? cONTEST;
+  List<QuestionContest>? cONTEST;
 
   quizQuestionModel({this.status, this.message, this.cONTEST});
 
@@ -9,9 +9,9 @@ class quizQuestionModel {
     status = json['status'];
     message = json['message'];
     if (json['CONTEST'] != null) {
-      cONTEST = <QuizQuestion>[];
+      cONTEST = <QuestionContest>[];
       json['CONTEST'].forEach((v) {
-        cONTEST!.add(new QuizQuestion.fromJson(v));
+        cONTEST!.add(new QuestionContest.fromJson(v));
       });
     }
   }
@@ -27,7 +27,7 @@ class quizQuestionModel {
   }
 }
 
-class QuizQuestion {
+class QuestionContest {
   String? qQALID;
   String? qQALTT;
   String? qQALQUESTIONID;
@@ -79,7 +79,7 @@ class QuizQuestion {
   String? cONTESTTOTALTIME;
   String? cONTESTPASSINGMARKS;
 
-  QuizQuestion(
+  QuestionContest(
       {this.qQALID,
         this.qQALTT,
         this.qQALQUESTIONID,
@@ -131,7 +131,7 @@ class QuizQuestion {
         this.cONTESTTOTALTIME,
         this.cONTESTPASSINGMARKS});
 
-  QuizQuestion.fromJson(Map<String, dynamic> json) {
+  QuestionContest.fromJson(Map<String, dynamic> json) {
     qQALID = json['QQAL_ID'];
     qQALTT = json['QQAL_TT'];
     qQALQUESTIONID = json['QQAL_QUESTION_ID'];
