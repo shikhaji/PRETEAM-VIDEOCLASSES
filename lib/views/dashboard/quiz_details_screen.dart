@@ -90,10 +90,10 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
         color: AppColor.primaryColor,
         child: InkWell(
           onTap: () {
-            // Navigator.pushNamed(context, Routs.questionScreen,arguments: OtpArguments(
-            //   ccId: "${widget.arguments?.ccId}"
-            // ));
-            Navigator.push(context, MaterialPageRoute(builder: (context) => WebScreen()));
+            Navigator.pushNamed(context, Routs.questionScreen,arguments: OtpArguments(
+              ccId: "${widget.arguments?.ccId}"
+            ));
+            //Navigator.push(context, MaterialPageRoute(builder: (context) => ScWebreen()));
           },
 
           child: const SizedBox(

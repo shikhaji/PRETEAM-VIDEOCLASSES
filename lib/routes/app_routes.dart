@@ -126,7 +126,7 @@ class RoutGenerator {
 
       case Routs.questionScreen:
         return MaterialPageRoute(
-            builder: (_) => QuizScreen(arguments: arguments as OtpArguments,));
+            builder: (_) => QuizScreen());
 
       default:
         return null;

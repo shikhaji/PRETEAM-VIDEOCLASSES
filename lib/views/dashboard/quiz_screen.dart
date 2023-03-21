@@ -21,7 +21,7 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreenState extends State<QuizScreen> {
   List<QuestionContest> getAllQuestionDetails = [];
-  int seconds = 20;
+  int seconds = 60;
   final _pageController = PageController(initialPage: 0);
   int questionINdex = 0;
   int userPercentage = 0;
@@ -65,30 +65,30 @@ class _QuizScreenState extends State<QuizScreen> {
           seconds--;
         }
         else{
-          // if(seconds == 0) {
-          //   showDialog(
-          //     context: context,
-          //     builder: (ctx) => AlertDialog(
-          //       title: const Text("Times Up !"),
-          //       content: const Text("Thank you for giving quiz "),
-          //       actions: <Widget>[
-          //         GestureDetector(
-          //           onTap: (){
-          //             quizResult(context);
-          //           },
-          //           child: Container(
-          //             color: Colors.green,
-          //             padding: const EdgeInsets.all(14),
-          //             child: const Text("SUBMIT"),
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   );
-          //   //CommonFunctions.toast('Times Up');
-          //   //quizResult(context);
-          //
-          // }
+          if(seconds == 0) {
+            showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                title: const Text("Times Up !"),
+                content: const Text("Thank you for giving quiz "),
+                actions: <Widget>[
+                  GestureDetector(
+                    onTap: (){
+                      quizResult(context);
+                    },
+                    child: Container(
+                      color: Colors.green,
+                      padding: const EdgeInsets.all(14),
+                      child: const Text("SUBMIT"),
+                    ),
+                  ),
+                ],
+              ),
+            );
+            //CommonFunctions.toast('Times Up');
+            //quizResult(context);
+
+          }
         }
       });
     });
@@ -262,42 +262,7 @@ class _QuizScreenState extends State<QuizScreen> {
         }
       ],
     },
-    {
-      "id": 6,
-      "answer": "8m",
-      "answer_discription": "",
-      "is_answered": 0,
-      "is_answer_status_right_wrong_omitted": 0,
-      "title":
-      "Main Mechanical Ventilator of a mine shall be installed on the surface at a distance of not less \r\nthan _____ from the opening of the shaft or inlcine",
-      "options": [
-        {
-          "option": "a",
-          "value": "10m",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "b",
-          "value": "8m",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "c",
-          "value": "7m",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "d",
-          "value": "5m",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "e",
-          "value": "4m",
-          "color": "0xFFFFFFFF",
-        }
-      ],
-    },
+
   ];
 
 
