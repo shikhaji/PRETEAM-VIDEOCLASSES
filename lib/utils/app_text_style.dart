@@ -14,6 +14,8 @@ class AppTextStyle {
 
   static const TextStyle title = TextStyle(
       fontSize: Sizes.s26, fontWeight: FontWeight.w700, color: AppColor.black);
+  static const TextStyle title1 = TextStyle(
+      fontSize: Sizes.s20, fontWeight: FontWeight.w700, color: AppColor.black);
   static const TextStyle titleRed = TextStyle(
       fontSize: Sizes.s18, fontWeight: FontWeight.w800, color: AppColor.marron);
   static const TextStyle lable = TextStyle(

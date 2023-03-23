@@ -17,7 +17,6 @@ import '../views/dashboard/my_order_screen.dart';
 import '../views/dashboard/payment_Desecription.dart';
 import '../views/dashboard/quiz_details_screen.dart';
 import '../views/dashboard/quiz_screen.dart';
-import '../views/dashboard/result_screen.dart';
 import '../views/dashboard/video_player_screen.dart';
 import '../views/splash/splash_screen.dart';
 import 'arguments.dart';
@@ -66,7 +65,7 @@ class RoutGenerator {
               arguments: arguments as OtpArguments,
             ));
 
-       case Routs.mobileVerification:
+      case Routs.mobileVerification:
         return MaterialPageRoute(
             builder: (_) => const MobileVerificationScreen());
 

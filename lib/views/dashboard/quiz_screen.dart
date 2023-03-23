@@ -1,503 +1,56 @@
-
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pr_team/views/dashboard/result_screen.dart';
-import '../../const/text_style.dart';
-import '../../model/quiz_question_model.dart';
-import '../../routes/arguments.dart';
-import '../../services/api_services.dart';
-import 'package:dio/dio.dart';
+import 'package:pr_team/model/shuffleanswers.dart';
+import 'package:pr_team/utils/app_color.dart';
+import 'package:pr_team/utils/app_text_style.dart';
+import 'package:pr_team/views/dashboard/question_pageview.dart';
+import 'package:pr_team/widgets/app_text.dart';
+import 'api_trivia.dart';
+
+//todo change this name
+typedef void Randomise(List options);
 
 class QuizScreen extends StatefulWidget {
-  final OtpArguments? arguments;
-  const QuizScreen({Key? key, this.arguments}) : super(key: key);
+  QuizScreen({Key? key}) : super(key: key);
+  List wrongRightList = [];
 
   @override
-  State<QuizScreen> createState() => _QuizScreenState();
+  _QuizScreenState createState() => _QuizScreenState();
 }
 
-
 class _QuizScreenState extends State<QuizScreen> {
-  List<QuestionContest> getAllQuestionDetails = [];
-  int seconds = 60;
-  final _pageController = PageController(initialPage: 0);
-  int questionINdex = 0;
-  int userPercentage = 0;
-  int wrongQ = 0;
-  int ommitedQuestion = 0;
-  int totalRight = 0;
-  Timer? timer;
-  @override
-  void initState() {
+  final ApiTrivia _apitrivia = ApiTrivia();
 
-    super.initState();
-    startTimer();
-    print("ccid : ${widget.arguments?.ccId}");
-  }
-
-  @override
-  void dispose() {
-    timer!.cancel();
-    super.dispose();
-  }
-  Future<void> QuizDetail() async {
-
-    FormData data() {
-      return FormData.fromMap({
-        "courseid":"${widget.arguments?.ccId}",
-      });
-    }
-    ApiService().getQuizQuestion(context,data: data()).then((value){
-
-      setState(() {
-        getAllQuestionDetails = value.cONTEST!;
-      });
-    });
-
-  }
-  @override
-  startTimer() {
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        if (seconds > 0) {
-          seconds--;
-        }
-        else{
-          if(seconds == 0) {
-            showDialog(
-              context: context,
-              builder: (ctx) => AlertDialog(
-                title: const Text("Times Up !"),
-                content: const Text("Thank you for giving quiz "),
-                actions: <Widget>[
-                  GestureDetector(
-                    onTap: (){
-                      quizResult(context);
-                    },
-                    child: Container(
-                      color: Colors.green,
-                      padding: const EdgeInsets.all(14),
-                      child: const Text("SUBMIT"),
-                    ),
-                  ),
-                ],
-              ),
-            );
-            //CommonFunctions.toast('Times Up');
-            //quizResult(context);
-
-          }
-        }
-      });
-    });
-  }
-  List quizListData = [
-    {
-      "id": 1,
-      "answer": "30%",
-      "answer_discription": "",
-      "is_answered": 0,
-      "is_answer_status_right_wrong_omitted": 0,
-      "title":
-      "A mine or part there of may be treated as naturally wet if the roadway dust sample \r\ncontain_______or more of moisture by weight.",
-      "options": [
-        {
-          "option": "a",
-          "value": "10%",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "b",
-          "value": "15%",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "c",
-          "value": "20%",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "d",
-          "value": "30%",
-          "color": "0xFFFFFFFF",
-        },
-      ],
-    },
-    {
-      "id": 2,
-      "answer": "25 cm",
-      "answer_discription": "",
-      "is_answered": 0,
-      "is_answer_status_right_wrong_omitted": 0,
-      "title":
-      "The thickness of ventilation stopping constructed of masonary or brickwork shall be _______cms \r\nin thickness",
-      "options": [
-        {
-          "option": "a",
-          "value": "20 cm",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "b",
-          "value": "15 cm",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "c",
-          "value": "25 cm",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "d",
-          "value": "10 cm",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "e",
-          "value": "18 cm",
-          "color": "0xFFFFFFFF",
-        }
-      ],
-    },
-    {
-      "id": 3,
-      "answer": "Mine Managers",
-      "answer_discription": "",
-      "is_answered": 0,
-      "is_answer_status_right_wrong_omitted": 0,
-      "title": "M.V.T. Rules 1966 shall not apply to the following persons",
-      "options": [
-        {
-          "option": "a",
-          "value": "Timber man",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "b",
-          "value": "Coal driller",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "c",
-          "value": "Coal driller",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "d",
-          "value": "Mine Managers",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "e",
-          "value": "Haulage attendents",
-          "color": "0xFFFFFFFF",
-        }
-      ],
-    },
-    {
-      "id": 4,
-      "answer": "3",
-      "answer_discription": "",
-      "is_answered": 0,
-      "is_answer_status_right_wrong_omitted": 0,
-      "title": "Mine Managers",
-      "options": [
-        {
-          "option": "a",
-          "value": "3",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "b",
-          "value": "2",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "c",
-          "value": "1",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "e",
-          "value": "Not required",
-          "color": "0xFFFFFFFF",
-        }
-      ],
-    },
-    {
-      "id": 5,
-      "answer": "1 year",
-      "answer_discription": "",
-      "is_answered": 0,
-      "is_answer_status_right_wrong_omitted": 0,
-      "title":
-      "As per M.V.T. Rules 1966 every person holding a gast testing certificate shall once in __________ \r\nundergo a course of training as detailed in 8th schedule of M V T Rules 1966.",
-      "options": [
-        {
-          "option": "a",
-          "value": "5 years",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "b",
-          "value": "1 year",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "c",
-          "value": "2 years",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "d",
-          "value": "3years",
-          "color": "0xFFFFFFFF",
-        },
-        {
-          "option": "e",
-          "value": "4years",
-          "color": "0xFFFFFFFF",
-        }
-      ],
-    },
-
-  ];
-
-
-  @override
-  quizResult(context) {
-    userPercentage = 0;
-    wrongQ = 0;
-    ommitedQuestion = 0;
-    totalRight = 0;
-
-    for (int i = 0; i < quizListData.length; i++) {
-      if (quizListData[i]['is_answer_status_right_wrong_omitted'] == 0) {
-        ommitedQuestion++;
-      }
-      if (quizListData[i]['is_answer_status_right_wrong_omitted'] == 1) {
-        totalRight++;
-      }
-      if (quizListData[i]['is_answer_status_right_wrong_omitted'] == 2) {
-        wrongQ++;
-      }
-    }
-
-    userPercentage = ((totalRight / quizListData.length) * 100).round();
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => ResultScreen(
-            userPercentage: userPercentage,
-            totalRight: totalRight,
-            wrongQ: wrongQ,
-            ommitedQuestion: ommitedQuestion,
-          ),
-        ),
-            (Route<dynamic> route) => false);
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF053251),
       appBar: AppBar(
-        title: const Text("Quiz Screen"),
+        centerTitle: true,
+        title:  appText('Quiz questions',style:AppTextStyle.appBarTitle.copyWith(color: AppColor.black)),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-
-                Text(
-                  "Question :${questionINdex + 1}/${quizListData.length}",
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    normalText(color: Colors.white, size: 24, text: "$seconds"),
-                    SizedBox(
-                      width: 80,
-                      height: 80,
-                      child: CircularProgressIndicator(
-                        value: seconds / 60,
-                        valueColor: const AlwaysStoppedAnimation(Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                itemCount: quizListData.length,
-                onPageChanged: (page) {
-                  print("Current page $page");
-                  setState(
-                        () {
-                      questionINdex = page;
-                    },
-                  );
-                },
-                itemBuilder: (context, index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFFAB40),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            quizListData[index]['title'],
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      quizListData[index]
-                      ['is_answer_status_right_wrong_omitted'] ==
-                          2
-                          ? Text(
-                        "Sorry : Right answer is -> ${quizListData[index]['answer']} ",
-                        style: const TextStyle(
-                          color: Colors.red,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      )
-                          : const SizedBox(),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      ...quizListData[index]['options']
-                          .map(
-                            (data) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: Card(
-                              elevation: 5,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: TextButton(
-                                style: TextButton.styleFrom(
-                                  backgroundColor: Color(
-                                    int.parse(
-                                      data['color'],
-                                    ),
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  if (quizListData[index]['is_answered'] ==
-                                      0) {
-                                    setState(() {
-                                      if (data['value'] ==
-                                          quizListData[index]['answer']) {
-                                        data['color'] = "0xFF31CD63";
-                                        quizListData[index][
-                                        'is_answer_status_right_wrong_omitted'] = 1;
-                                      } else {
-                                        data['color'] = "0xFFFF0000";
-                                        quizListData[index][
-                                        'is_answer_status_right_wrong_omitted'] = 2;
-                                      }
-                                      quizListData[index]['is_answered'] =
-                                      1;
-                                    });
-                                  } else {}
-                                },
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 0),
-                                      child: Container(
-                                        height: 40,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                          color: Color(
-                                            int.parse(
-                                              data['color'],
-                                            ),
-                                          ),
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data['option'].toUpperCase(),
-                                            style: const TextStyle(
-                                                color: Colors.black),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Flexible(
-                                      child: Text(
-                                        data['value'],
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                          .toList(),
-                    ],
-                  );
-                },
-              ),
-            )
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          if (questionINdex == quizListData.length - 1) {
-            print("Submit ");
-            quizResult(context);
-          } else {
-            print("ELSE PART");
-            _pageController.nextPage(
-              duration: const Duration(milliseconds: 5),
-              curve: Curves.easeIn,
-            );
-          }
-        },
-        label:
-        Text(questionINdex == quizListData.length - 1 ? "Submit" : "Next"),
-      ),
+      body: _futureWidget(),
     );
   }
 
+  _futureWidget() {
+    return FutureBuilder(
+      future: _apitrivia.getStates(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List results = snapshot.data as List;
+          ShuffleRight(
+              result: results,
+              Shuffler: (options) {
+                widget.wrongRightList = options;
+              });
+
+          return QuestionsPageView(
+              results: results, wrongRightList: widget.wrongRightList);
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
 }

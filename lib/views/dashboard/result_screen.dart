@@ -16,10 +16,10 @@ class ResultScreen extends StatelessWidget {
 
   const ResultScreen(
       {super.key,
-      required this.userPercentage,
-      required this.totalRight,
-      required this.wrongQ,
-      required this.ommitedQuestion});
+        required this.userPercentage,
+        required this.totalRight,
+        required this.wrongQ,
+        required this.ommitedQuestion});
 
   @override
   Widget build(BuildContext context) {

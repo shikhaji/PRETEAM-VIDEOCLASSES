@@ -44,7 +44,7 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
 
     FormData data() {
       return FormData.fromMap({
-        "courseid":"${widget.arguments?.ccId}",
+        "courseid":"1",
       });
     }
     ApiService().getQuizDetails(context,data: data()).then((value){
@@ -58,40 +58,40 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: getAllQuizDetails.length,
-            itemBuilder: (context, inx) {
-              return ContestListContainer(
-                  contestId : getAllQuizDetails[inx].cONTESTTEMPID ?? "",
-                contestDate : getAllQuizDetails[inx].cONTESTSTARTDATE ?? "",
-                contestTime : getAllQuizDetails[inx].cONTESTTIME ?? "",
-                contestTotalParticipants : getAllQuizDetails[inx].tOTALPARTICIPANTS ?? "",
-                contestFirstPrice : getAllQuizDetails[inx].cONTESTFIRSTPRICE ?? "",
-                contestPassingMarks : getAllQuizDetails[inx].cONTESTPASSINGMARKS ?? "",
-                contestSubjectName : getAllQuizDetails[inx].cVLNAME ?? "",
-                contestPerQuestionTiming : getAllQuizDetails[inx].cONTESTPERQUESTIONTIMING?? "",
-                contestTotalQuestions : getAllQuizDetails[inx].tOTALQUESTIONS?? "",
-                contestTotalTime : getAllQuizDetails[inx].cONTESTTOTALTIME?? "",
-              );
-            },
-          ),
+      body: SafeArea(
+        child: ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: getAllQuizDetails.length,
+          itemBuilder: (context, inx) {
+            return ContestListContainer(
+              contestId : getAllQuizDetails[inx].cONTESTTEMPID ?? "",
+              contestDate : getAllQuizDetails[inx].cONTESTSTARTDATE ?? "",
+              contestTime : getAllQuizDetails[inx].cONTESTTIME ?? "",
+              contestTotalParticipants : getAllQuizDetails[inx].tOTALPARTICIPANTS ?? "",
+              contestFirstPrice : getAllQuizDetails[inx].cONTESTFIRSTPRICE ?? "",
+              contestPassingMarks : getAllQuizDetails[inx].cONTESTPASSINGMARKS ?? "",
+              contestSubjectName : getAllQuizDetails[inx].cVLNAME ?? "",
+              contestPerQuestionTiming : getAllQuizDetails[inx].cONTESTPERQUESTIONTIMING?? "",
+              contestTotalQuestions : getAllQuizDetails[inx].tOTALQUESTIONS?? "",
+              contestTotalTime : getAllQuizDetails[inx].cONTESTTOTALTIME?? "",
+            );
+          },
+        ),
 
-        ),
-        appBar: SecondaryAppBar(
-          title: "Quiz Details",
-          isLeading: true,
-          leadingIcon: Icons.arrow_back,
-        ),
+      ),
+      appBar: SecondaryAppBar(
+        title: "Quiz Details",
+        isLeading: true,
+        leadingIcon: Icons.arrow_back,
+      ),
       bottomNavigationBar:
       Material(
         color: AppColor.primaryColor,
         child: InkWell(
           onTap: () {
             Navigator.pushNamed(context, Routs.questionScreen,arguments: OtpArguments(
-              ccId: "${widget.arguments?.ccId}"
+                ccId: "${widget.arguments?.ccId}"
             ));
             //Navigator.push(context, MaterialPageRoute(builder: (context) => ScWebreen()));
           },
@@ -111,17 +111,17 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
     );
   }
   Widget ContestListContainer({
-  required String contestId,
-  required String contestDate,
-  required String contestTime,
-  required String contestTotalParticipants,
-  required String contestFirstPrice,
-  required String contestPassingMarks,
-  required String contestSubjectName,
-  required String contestPerQuestionTiming,
-  required String contestTotalQuestions,
-  required String contestTotalTime,
-}){
+    required String contestId,
+    required String contestDate,
+    required String contestTime,
+    required String contestTotalParticipants,
+    required String contestFirstPrice,
+    required String contestPassingMarks,
+    required String contestSubjectName,
+    required String contestPerQuestionTiming,
+    required String contestTotalQuestions,
+    required String contestTotalTime,
+  }){
     return  Column(
       children: [
         Container(
@@ -148,7 +148,7 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
                     //   ],
                     // ),
                     appText("Contest ID $contestId",style: AppTextStyle.buttonTextStyle1,),
-                   ],
+                  ],
                 ),
               ),
               Container(
