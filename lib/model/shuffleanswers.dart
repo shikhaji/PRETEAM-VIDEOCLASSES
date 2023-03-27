@@ -10,7 +10,7 @@ class ShuffleRight {
   ShuffleRight({required this.result, required this.Shuffler}) {
     wrongRightList.addAll(result.map((e) => []));
     for (int i = 0; i < result.length; i++) {
-      List wrong = result.elementAt(i).incorrect_answers;
+      List wrong = result.elementAt(i).incorrect_answer;
       List right = [result.elementAt(i).correct_answer];
       wrongRightList[i] = wrong + right;
       wrongRightList[i].shuffle();

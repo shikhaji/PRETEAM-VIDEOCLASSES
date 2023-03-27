@@ -23,13 +23,12 @@ import 'package:pr_team/model/questions.dart';
 
 class ApiTrivia {
   Future<List<Results>?> getStates() async {
-    Uri url = Uri.parse("https://opentdb.com/api.php?amount=10");
-
-    var response = await http.get(url);
+    Uri url = Uri.parse("https://vedioclasses.provisioningtech.com/get_ajax/get_question_list");
+    var response = await http.post(url, body:{"courseid": "2"});
     if (response.statusCode == 200) {
       log('api worked ${response.body}');
       var body = response.body;
-      var statesJsonArray = json.decode(body)['results'];
+      var statesJsonArray = json.decode(body)['record'];
 
       try {
         List<Results> results =

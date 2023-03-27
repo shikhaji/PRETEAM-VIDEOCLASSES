@@ -143,7 +143,7 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
 
           SizedBoxH10(),
           PrimaryButton(lable: 'Take Quiz', onPressed: (){
-            Navigator.pushNamed(context, Routs.quizDetails,arguments: OtpArguments(
+            Navigator.pushNamed(context, Routs.questionScreen,arguments: OtpArguments(
               ccId: ccid,
             ));
           },color: AppColor.grey),
