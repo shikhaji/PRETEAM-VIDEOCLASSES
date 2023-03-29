@@ -66,7 +66,7 @@ class _DrawerState extends State<DrawerWidget> {
                       title: 'Terms & Conditions',
                       onTap: () async {
                         var url = Uri.parse(
-                            "https://vedioclasses.provisioningtech.com/terms-conditions.html");
+                            "vedioclasses.provisioningtech.com/terms-conditions.html");
                         if (await canLaunchUrl(url)) {
                           await launchUrl(url);
                         } else {

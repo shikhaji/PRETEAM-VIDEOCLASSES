@@ -68,6 +68,7 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
 
     callApi();
     print("ccid: ${widget.arguments?.ccId}");
+    print("chapterID: ${widget.arguments?.chapterId}");
     ccid = "${widget.arguments?.ccId}";
   }
 
@@ -135,16 +136,17 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
                   ));
                 },
 
-                child: Image.asset(AppAsset.youtube,scale: 8)),
+                child: Image.asset(AppAsset.youtube1,scale: 15)),
           ),
         ),
       ),
 
 
-          SizedBoxH10(),
+          SizedBoxH20(),
           PrimaryButton(lable: 'Take Quiz', onPressed: (){
             Navigator.pushNamed(context, Routs.questionScreen,arguments: OtpArguments(
               ccId: ccid,
+              chapterId: "${widget.arguments?.chapterId}",
             ));
           },color: AppColor.grey),
           SizedBoxH34(),

@@ -76,7 +76,7 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                               correctanswerlist: correctanswerlist,
                             ),
                           ),
-                          (route) => false);
+                              (route) => false);
                     },
                     child: Container(
                       color: Colors.green,
@@ -118,7 +118,7 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                 itemBuilder: (context, index) {
                   String userAnswer = _userAnswerList[index];
                   int checkedOptionPosition =
-                      widget.wrongRightList[index].indexOf(userAnswer);
+                  widget.wrongRightList[index].indexOf(userAnswer);
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(
@@ -251,7 +251,7 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                         padding: EdgeInsets.all(10),
                         primary: Colors.blueGrey[800],
                         fixedSize:
-                            Size(MediaQuery.of(context).size.width * 0.7, 50)),
+                        Size(MediaQuery.of(context).size.width * 0.7, 50)),
                     onPressed: () {
                       Navigator.pushAndRemoveUntil(
                           context,
@@ -261,7 +261,7 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                               correctanswerlist: correctanswerlist,
                             ),
                           ),
-                          (route) => false);
+                              (route) => false);
                     },
                     child: Text('SUBMIT',
                         style: AppTextStyle.buttonTextStyle2.copyWith(

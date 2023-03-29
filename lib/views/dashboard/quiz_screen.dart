@@ -5,22 +5,55 @@ import 'package:pr_team/utils/app_color.dart';
 import 'package:pr_team/utils/app_text_style.dart';
 import 'package:pr_team/views/dashboard/question_pageview.dart';
 import 'package:pr_team/widgets/app_text.dart';
-import 'api_trivia.dart';
-
+import '../../model/questions.dart';
+import '../../routes/arguments.dart';
+import 'dart:developer';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 //todo change this name
 typedef void Randomise(List options);
 
 class QuizScreen extends StatefulWidget {
-  QuizScreen({Key? key}) : super(key: key);
+  final OtpArguments? arguments;
+  QuizScreen({Key? key, this.arguments}) : super(key: key);
   List wrongRightList = [];
+
+
 
   @override
   _QuizScreenState createState() => _QuizScreenState();
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-  final ApiTrivia _apitrivia = ApiTrivia();
 
+  @override
+  void initState() {
+
+    super.initState();
+    print("chapterID: ${widget.arguments?.chapterId}");
+  }
+  Future<List<Results>?> getStates() async {
+    Uri url = Uri.parse("https://vedioclasses.provisioningtech.com/get_ajax/get_question_list");
+    var response = await http.post(url, body:{"courseid": "${widget.arguments?.chapterId}"});
+    if (response.statusCode == 200) {
+      log('api worked ${response.body}');
+      var body = response.body;
+      var statesJsonArray = json.decode(body)['record'];
+
+      try {
+        List<Results> results =
+        (statesJsonArray as List).map((e) => Results.fromJson(e)).toList();
+
+        return results;
+      } catch (e) {
+        log('try failed $e');
+      }
+    } else {
+      log('api request failed ${response.body}');
+
+      return null;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +68,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   _futureWidget() {
     return FutureBuilder(
-      future: _apitrivia.getStates(),
+      future: getStates(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List results = snapshot.data as List;

@@ -104,6 +104,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                             desc: getAllCourseDetails[inx].cVLDESC  ?? "",
                             img: getAllCourseDetails[inx].cCFVCOURSEIMAGE  ?? "",
                             ccid: getAllCourseDetails[inx].cCFVID  ?? "",
+                            chapterID: getAllCourseDetails[inx].cVLID  ?? "",
 
                           );
                         },
@@ -135,6 +136,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     required String desc,
     required String img,
     required String ccid,
+    required String chapterID,
   }){
     return Column(
       children: [
@@ -206,6 +208,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                                   ccDesc: desc,
                                   ccImg: img,
                                 ccId: ccid,
+                                chapterId: chapterID,
 
                               ));
                           //  clearField();
